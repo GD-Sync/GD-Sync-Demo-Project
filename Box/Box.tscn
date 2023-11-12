@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://cmwyiep10m4u4"]
+
+[ext_resource type="Script" path="res://Box/Box.gd" id="1_oklwc"]
+[ext_resource type="PackedScene" uid="uid://cdtq6fyl7hhgm" path="res://Box/BoxVisuals/BoxModel.glb" id="2_ggurh"]
+[ext_resource type="AudioStream" uid="uid://dd7nemvkapogt" path="res://Box/Sounds/crate-break-1-93926.wav" id="3_71fsr"]
+[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="4_rf4j5"]
+[ext_resource type="PackedScene" uid="uid://c54mpt43fs4wc" path="res://Player/Coin/Coin.tscn" id="5_gkdsj"]
+[ext_resource type="PackedScene" uid="uid://dds3pccqwqhbb" path="res://Box/DestroyedBox.tscn" id="6_65q0q"]
+[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd" id="7_4bpui"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rxelo"]
+
+[node name="Box" type="RigidBody3D" groups=["damageables", "targeteables"]]
+collision_layer = 7
+can_sleep = false
+script = ExtResource("1_oklwc")
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_rxelo")
+
+[node name="CrateVisual" parent="." instance=ExtResource("2_ggurh")]
+
+[node name="DestroySound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_71fsr")
+volume_db = 1.0
+
+[node name="CoinInstantiator" type="Node" parent="."]
+script = ExtResource("4_rf4j5")
+spawn_type = 1
+target_location = null
+scene = ExtResource("5_gkdsj")
+sync_starting_changes = true
+
+[node name="BoxInstantiator" type="Node" parent="."]
+script = ExtResource("4_rf4j5")
+spawn_type = 1
+target_location = null
+scene = ExtResource("6_65q0q")
+sync_starting_changes = true
+
+[node name="PropertySynchronizer" type="Node" parent="."]
+script = ExtResource("7_4bpui")
+process = 1
+refresh_rate = 20
+node_path = NodePath("..")
+property_name = "position"
+interpolated = true
+interpolation_speed = 15.0
+
+[node name="PropertySynchronizer2" type="Node" parent="."]
+script = ExtResource("7_4bpui")
+process = 1
+refresh_rate = 20
+node_path = NodePath("..")
+property_name = "basis"
+interpolated = true
+interpolation_speed = 15.0

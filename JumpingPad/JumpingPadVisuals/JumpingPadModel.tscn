@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkwfic6flrwco"]
+
+[ext_resource type="PackedScene" uid="uid://n4c3p8bt5sb1" path="res://JumpingPad/JumpingPadVisuals/JumpingPadModel.glb" id="1_b8bry"]
+[ext_resource type="Material" path="res://JumpingPad/JumpingPadVisuals/JumpingPadModel_screen_mat.tres" id="2_54yml"]
+
+[node name="jump_pad" instance=ExtResource("1_b8bry")]
+
+[node name="Circle_002" parent="." index="1"]
+surface_material_override/0 = ExtResource("2_54yml")

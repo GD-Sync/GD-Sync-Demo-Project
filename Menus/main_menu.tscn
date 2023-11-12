@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdbh0pdnfm0i1"]
+
+[ext_resource type="Script" path="res://Menus/main_menu.gd" id="1_e4nnw"]
+[ext_resource type="Texture2D" uid="uid://d2pl6xyfyub5k" path="res://addons/GD-Sync/UI/ConfigMenu/GDMLogo.png" id="1_ou86h"]
+[ext_resource type="Theme" uid="uid://5whm1igkt23h" path="res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres" id="2_wrm8m"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e4nnw")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_wrm8m")
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_ou86h")
+
+[node name="Connect" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("2_wrm8m")
+text = "CONNECT"
+
+[node name="Quit" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("2_wrm8m")
+text = "QUIT"
+
+[node name="Message" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="PanelContainer/CenterContainer/VBoxContainer/Connect" to="." method="_on_connect_pressed"]
+[connection signal="pressed" from="PanelContainer/CenterContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

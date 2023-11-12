@@ -1,0 +1,245 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxv3um0nt0768"]
+
+[ext_resource type="PackedScene" uid="uid://8qy4jenu2w1m" path="res://GD-SyncTemplates/LobbyBrowser/lobby_browser.tscn" id="1_dgkn0"]
+[ext_resource type="Script" path="res://Menus/lobby_browsing_menu.gd" id="1_q6obi"]
+[ext_resource type="Theme" uid="uid://5whm1igkt23h" path="res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres" id="3_2opek"]
+[ext_resource type="Script" path="res://Menus/lobby_creator.gd" id="4_vxmqb"]
+[ext_resource type="Script" path="res://Menus/lobby_joiner.gd" id="5_org80"]
+
+[node name="LobbyBrowsingMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q6obi")
+
+[node name="LobbyBrowser" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_2opek")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyBrowser"]
+layout_mode = 2
+
+[node name="LobbyBrowser" parent="LobbyBrowser/VBoxContainer" instance=ExtResource("1_dgkn0")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="LobbyBrowser/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbyBrowser/VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="Join Manual" type="Button" parent="LobbyBrowser/VBoxContainer/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("3_2opek")
+text = "JOIN MANUAL"
+
+[node name="CreateLobby" type="Button" parent="LobbyBrowser/VBoxContainer/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("3_2opek")
+text = "CREATE LOBBY"
+
+[node name="Back" type="Button" parent="LobbyBrowser/VBoxContainer/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("3_2opek")
+text = "BACK"
+
+[node name="LobbyCreator" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_2opek")
+script = ExtResource("4_vxmqb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyCreator"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyCreator/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+alignment = 1
+
+[node name="WidthSpacer" type="Control" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+
+[node name="LobbyNameTitle" type="Label" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Lobby Name"
+
+[node name="LobbyName" type="LineEdit" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Spacer1" type="Control" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="PasswordTitle" type="Label" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Password
+"
+
+[node name="Password" type="LineEdit" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "(Optional)"
+
+[node name="Spacer2" type="Control" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="PlayerLimitTitle" type="Label" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Player Limit"
+
+[node name="PlayerLimit" type="SpinBox" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+value = 4.0
+suffix = "players"
+
+[node name="Spacer3" type="Control" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Visibility" type="HBoxContainer" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Visible" type="CheckButton" parent="LobbyCreator/VBoxContainer/VBoxContainer/Visibility"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
+[node name="Label" type="Label" parent="LobbyCreator/VBoxContainer/VBoxContainer/Visibility"]
+layout_mode = 2
+text = "Publicly Visible"
+
+[node name="CreateMessage" type="Label" parent="LobbyCreator/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbyCreator/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Create" type="Button" parent="LobbyCreator/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("3_2opek")
+text = "CREATE"
+
+[node name="Back" type="Button" parent="LobbyCreator/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("3_2opek")
+text = "BACK"
+
+[node name="LobbyJoiner" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_2opek")
+script = ExtResource("5_org80")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyJoiner"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyJoiner/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+alignment = 1
+
+[node name="WidthSpacer" type="Control" parent="LobbyJoiner/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+
+[node name="JoinNameBox" type="VBoxContainer" parent="LobbyJoiner/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LobbyNameTitle" type="Label" parent="LobbyJoiner/VBoxContainer/VBoxContainer/JoinNameBox"]
+layout_mode = 2
+text = "Lobby Name"
+
+[node name="JoinName" type="LineEdit" parent="LobbyJoiner/VBoxContainer/VBoxContainer/JoinNameBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Spacer1" type="Control" parent="LobbyJoiner/VBoxContainer/VBoxContainer/JoinNameBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="JoinPasswordBox" type="VBoxContainer" parent="LobbyJoiner/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PasswordTitle" type="Label" parent="LobbyJoiner/VBoxContainer/VBoxContainer/JoinPasswordBox"]
+layout_mode = 2
+text = "Password
+"
+
+[node name="JoinPassword" type="LineEdit" parent="LobbyJoiner/VBoxContainer/VBoxContainer/JoinPasswordBox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="JoinMessage" type="Label" parent="LobbyJoiner/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbyJoiner/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Join" type="Button" parent="LobbyJoiner/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("3_2opek")
+text = "JOIN"
+
+[node name="Back" type="Button" parent="LobbyJoiner/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+theme = ExtResource("3_2opek")
+text = "BACK"
+
+[connection signal="join_pressed" from="LobbyBrowser/VBoxContainer/LobbyBrowser" to="." method="_on_lobby_browser_join_pressed"]
+[connection signal="pressed" from="LobbyBrowser/VBoxContainer/CenterContainer/HBoxContainer/Join Manual" to="." method="_on_join_manual_pressed"]
+[connection signal="pressed" from="LobbyBrowser/VBoxContainer/CenterContainer/HBoxContainer/CreateLobby" to="." method="_on_create_lobby_pressed"]
+[connection signal="pressed" from="LobbyBrowser/VBoxContainer/CenterContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="LobbyCreator/VBoxContainer/HBoxContainer/Create" to="LobbyCreator" method="_on_create_pressed"]
+[connection signal="pressed" from="LobbyCreator/VBoxContainer/HBoxContainer/Back" to="LobbyCreator" method="_on_back_pressed"]
+[connection signal="pressed" from="LobbyJoiner/VBoxContainer/HBoxContainer/Join" to="LobbyJoiner" method="_on_join_pressed"]
+[connection signal="pressed" from="LobbyJoiner/VBoxContainer/HBoxContainer/Back" to="LobbyJoiner" method="_on_back_pressed"]
