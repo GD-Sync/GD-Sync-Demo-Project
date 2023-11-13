@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" path="res://DemoPage/DemoPage.gd" id="1_4brsx"]
 [ext_resource type="Shader" path="res://DemoPage/Assets/BlurShader.gdshader" id="2_07raf"]
-[ext_resource type="Texture2D" uid="uid://d2pl6xyfyub5k" path="res://addons/GD-Multiplayer/UI/ConfigMenu/GDMLogo.png" id="3_4t15x"]
+[ext_resource type="Texture2D" uid="uid://d2pl6xyfyub5k" path="res://addons/GD-Sync/UI/ConfigMenu/GDSLogo.png" id="3_4t15x"]
 [ext_resource type="FontFile" uid="uid://ch2aef1jex81f" path="res://DemoPage/Fonts/Montserrat-Bold.ttf" id="6_r37av"]
+
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oq2x4"]
 shader = ExtResource("2_07raf")

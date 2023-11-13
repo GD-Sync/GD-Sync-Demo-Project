@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2pl6xyfyub5k"
-path="res://.godot/imported/GDMLogo.png-a429a3cf387472c62c3ddc60d8538e9e.ctex"
+path="res://.godot/imported/GDSLogo.png-f71dad2ce9e497aa8e805547e20fd4d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/GD-Sync/UI/ConfigMenu/GDMLogo.png"
-dest_files=["res://.godot/imported/GDMLogo.png-a429a3cf387472c62c3ddc60d8538e9e.ctex"]
+source_file="res://addons/GD-Sync/UI/ConfigMenu/GDSLogo.png"
+dest_files=["res://.godot/imported/GDSLogo.png-f71dad2ce9e497aa8e805547e20fd4d7.ctex"]
 
 [params]
 
