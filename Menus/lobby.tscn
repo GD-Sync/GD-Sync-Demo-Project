@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://5quswar7oaeo"]
+[gd_scene load_steps=4 format=3 uid="uid://5quswar7oaeo"]
 
 [ext_resource type="Script" path="res://Menus/lobby.gd" id="1_8ca5k"]
 [ext_resource type="Theme" uid="uid://5whm1igkt23h" path="res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres" id="2_s2cyl"]
+[ext_resource type="PackedScene" uid="uid://dgbv7r0yrg4yk" path="res://GD-SyncTemplates/TextChat/text_chat.tscn" id="3_w30kf"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -28,7 +29,6 @@ alignment = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
 alignment = 1
 
 [node name="WidthSpacer" type="Control" parent="PanelContainer/VBoxContainer/VBoxContainer"]
@@ -55,7 +55,7 @@ layout_mode = 2
 theme_type_variation = &"GDPanel"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(0, 400)
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 
 [node name="PlayerList" type="VBoxContainer" parent="PanelContainer/VBoxContainer/VBoxContainer/PanelContainer/ScrollContainer"]
@@ -90,6 +90,24 @@ custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 theme = ExtResource("2_s2cyl")
 text = "LEAVE"
+
+[node name="ChatContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="ChatContainer"]
+layout_mode = 2
+text = "Chat"
+horizontal_alignment = 1
+
+[node name="TextChat" parent="ChatContainer" instance=ExtResource("3_w30kf")]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+open_action_name = "open_chat"
+cancel_action_name = "pause"
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/Leave" to="." method="_on_leave_pressed"]

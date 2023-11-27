@@ -30,7 +30,7 @@ func _ready():
 func set_moving(value : bool):
 #	If the animation state changes, synchronize it with all other clients
 #	Only send this if this is YOUR player model
-	if moving != value and GDSync.is_mc_owner(self): GDSync.call_func(set_moving, [value])
+	if moving != value and GDSync.is_gdsync_owner(self): GDSync.call_func(set_moving, [value])
 	
 	moving = value
 	if moving:
@@ -48,7 +48,7 @@ func set_moving_speed(value : float):
 		
 		#	Update the movement speed
 		#	Only send this if this is YOUR player model
-		if GDSync.is_mc_owner(self): GDSync.call_func(set_moving_speed, [value])
+		if GDSync.is_gdsync_owner(self): GDSync.call_func(set_moving_speed, [value])
 
 
 func jump():
@@ -56,7 +56,7 @@ func jump():
 	
 #	Activate the jump animation
 #	Only send this if this is YOUR player model
-	if GDSync.is_mc_owner(self): GDSync.call_func(jump)
+	if GDSync.is_gdsync_owner(self): GDSync.call_func(jump)
 
 
 func fall():
@@ -64,7 +64,7 @@ func fall():
 	
 #	Activate the fall animation
 #	Only send this if this is YOUR player model
-	if GDSync.is_mc_owner(self): GDSync.call_func(fall)
+	if GDSync.is_gdsync_owner(self): GDSync.call_func(fall)
 	
 	moving = false
 
@@ -74,7 +74,7 @@ func punch():
 	
 #	Activate the punch animation
 #	Only send this if this is YOUR player model
-	if GDSync.is_mc_owner(self): GDSync.call_func(punch)
+	if GDSync.is_gdsync_owner(self): GDSync.call_func(punch)
 
 
 func set_color(color : Color):

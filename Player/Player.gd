@@ -78,11 +78,11 @@ func set_multiplayer_data():
 	_username.text = GDSync.get_player_data(client_id, "Username", "Unkown")
 	
 #	Make sure to only display the username of OTHER players, not yourself
-	_username.visible = !GDSync.is_mc_owner(self)
+	_username.visible = !GDSync.is_gdsync_owner(self)
 
 func _physics_process(delta: float) -> void:
 #	Only process inputs if this is YOUR player model
-	if !GDSync.is_mc_owner(self): return
+	if !GDSync.is_gdsync_owner(self): return
 	
 	
 	
@@ -231,7 +231,7 @@ func collect_coin() -> void:
 	_coins += 1
 	
 #	Only show the coin UI if YOUR player model picked it up
-	if GDSync.is_mc_owner(self): _ui_coins_container.update_coins_amount(_coins)
+	if GDSync.is_gdsync_owner(self): _ui_coins_container.update_coins_amount(_coins)
 
 
 func lose_coins() -> void:
@@ -248,7 +248,7 @@ func lose_coins() -> void:
 		coin.spawn(1.5)
 	
 	#	Only show the coin UI if YOUR player model lost coins
-	if GDSync.is_mc_owner(self): _ui_coins_container.update_coins_amount(_coins)
+	if GDSync.is_gdsync_owner(self): _ui_coins_container.update_coins_amount(_coins)
 
 
 func _get_camera_oriented_input() -> Vector3:
@@ -273,7 +273,7 @@ func play_foot_step_sound() -> void:
 
 
 func damage(_impact_point: Vector3, force: Vector3) -> void:
-	if GDSync.is_mc_owner(self):
+	if GDSync.is_gdsync_owner(self):
 		apply_damage(_impact_point, force)
 	else:
 		GDSync.call_func_on(name.to_int(), apply_damage, [_impact_point, force])

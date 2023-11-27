@@ -34,15 +34,22 @@ func _input(event: InputEvent) -> void:
 
 
 func pause_demo() -> void:
-	_demo_mouse_mode = Input.mouse_mode
 	demo_page_root.show()
 	var tween := create_tween()
 	tween.tween_property(demo_page_root, "modulate", Color.WHITE, 0.3)
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
+	disable_controls()
 
 func resume_demo() -> void:
 	var tween := create_tween()
 	tween.tween_property(demo_page_root, "modulate", Color.TRANSPARENT, 0.3)
 	tween.tween_callback(demo_page_root.hide)
 	Input.mouse_mode = _demo_mouse_mode
+	enable_controls()
+
+func disable_controls():
+	_demo_mouse_mode = Input.mouse_mode
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func enable_controls():
+	Input.mouse_mode = _demo_mouse_mode
+

@@ -33,7 +33,7 @@ func _ready():
 
 func multiplayer_update():
 #	Only enable the camera for YOUR player model
-	camera.current = GDSync.is_mc_owner(self)
+	camera.current = GDSync.is_gdsync_owner(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED

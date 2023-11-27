@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://ccjru1onq2k2c"]
+[gd_scene load_steps=34 format=3 uid="uid://ccjru1onq2k2c"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_fiy8h"]
 [ext_resource type="PackedScene" uid="uid://d34nyatdgcake" path="res://JumpingPad/JumpingPad.tscn" id="3_w2mh2"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://rn45gytkk6tv" path="res://Enemies/BeeBot.tscn" id="13_012dc"]
 [ext_resource type="PackedScene" uid="uid://cvwkhlljkg06j" path="res://Enemies/Beetle.tscn" id="14_tmmem"]
 [ext_resource type="PackedScene" path="res://Environment/flowers/flower_patch.tscn" id="15_jqya0"]
+[ext_resource type="PackedScene" uid="uid://dgbv7r0yrg4yk" path="res://GD-SyncTemplates/TextChat/text_chat.tscn" id="16_4n8ok"]
 [ext_resource type="PackedScene" uid="uid://cnj0t3ad178q6" path="res://DemoPage/DemoPage.tscn" id="16_qr75n"]
 [ext_resource type="AudioStream" uid="uid://bveh08m6w5ryf" path="res://Level/Music/mountain.mp3" id="17_mil5a"]
 
@@ -1642,10 +1643,32 @@ skeleton = NodePath("../..")
 transform = Transform3D(2.05346, 0, 0.789485, 0, 2.2, 0, -0.789485, 0, 2.05346, -0.0362195, 0.499586, -15.3836)
 skeleton = NodePath("../..")
 
+[node name="ChatAnchor" type="VBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="ChatAnchor"]
+layout_mode = 2
+text = "Chat"
+horizontal_alignment = 1
+
+[node name="TextChat" parent="ChatAnchor" instance=ExtResource("16_4n8ok")]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+open_action_name = "open_chat"
+cancel_action_name = "pause"
+
 [node name="DemoPage" parent="." instance=ExtResource("16_qr75n")]
 
 [node name="StageMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_mil5a")
 autoplay = true
+
+[connection signal="typing_started" from="ChatAnchor/TextChat" to="DemoPage" method="disable_controls"]
+[connection signal="typing_stopped" from="ChatAnchor/TextChat" to="DemoPage" method="enable_controls"]
 
 [editable path="NavigationRegion3D/terrain_main_ground"]

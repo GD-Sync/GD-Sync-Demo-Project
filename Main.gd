@@ -25,7 +25,7 @@ func client_joined(client_id : int):
 	add_child(player)
 	
 #	Make sure to make the client the owner of their own player controller
-	GDSync.set_mc_owner(player, client_id)
+	GDSync.set_gdsync_owner(player, client_id)
 
 func client_left(client_id : int):
 #	When a client leaves, delete their player controller
