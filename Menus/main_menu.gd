@@ -27,6 +27,6 @@ func connection_failed(error : int):
 	%Message.modulate = Color.INDIAN_RED
 	match(error):
 		ENUMS.CONNECTION_FAILED.INVALID_PUBLIC_KEY:
-			%Message.text = "The public or private key you entered where invalid."
+			%Message.text = "The public or private key you entered were invalid."
 		ENUMS.CONNECTION_FAILED.TIMEOUT:
 			%Message.text = "Unable to connect, please check your internet connection."
