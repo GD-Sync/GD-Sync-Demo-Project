@@ -12,14 +12,10 @@ extends Node3D
 @onready var _raycast: ShapeCast3D = %ShapeCast3D
 @onready var _launch_point: Marker3D = %LaunchPoint
 @onready var _trail_mesh_instance: MeshInstance3D = %TrailMeshInstance
-@onready var _grenade_instantiator : Node = $GrenadeInstantiator
+@onready var _grenade_instantiator = $GrenadeInstantiator
 
 var _throw_velocity := Vector3.ZERO
 var _time_to_land := 0.0
-
-func _ready() -> void:
-	_grenade_instantiator.target_location = get_tree().current_scene
-
 
 func _physics_process(delta: float) -> void:
 	if visible:

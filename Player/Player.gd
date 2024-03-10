@@ -42,7 +42,7 @@ enum WEAPON_TYPE { DEFAULT, GRENADE }
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var _bullet_instantiator : Node = $BulletInstantiator
 @onready var _coin_instantiator : Node = $CoinInstantiator
-@onready var _position_synchronizer : PropertySynchronizer = $PropertySynchronizer
+@onready var _position_synchronizer = $PropertySynchronizer
 
 @onready var _equipped_weapon: WEAPON_TYPE = WEAPON_TYPE.DEFAULT
 @onready var _move_direction := Vector3.ZERO

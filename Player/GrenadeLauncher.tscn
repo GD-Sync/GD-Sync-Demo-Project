@@ -50,4 +50,8 @@ material_override = ExtResource("3_s7dm5")
 
 [node name="GrenadeInstantiator" type="Node" parent="."]
 script = ExtResource("4_j6gft")
+target_location = NodePath("")
 scene = ExtResource("5_wnc0k")
+replicate_on_join = true
+sync_starting_changes = true
+excluded_properties = PackedStringArray()
