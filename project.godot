@@ -13,7 +13,7 @@ config_version=5
 publicKey=""
 privateKey=""
 uniqueUsername=false
-version="0.5"
+version="0.6"
 
 [application]
 
