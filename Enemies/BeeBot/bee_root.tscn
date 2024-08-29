@@ -1309,7 +1309,7 @@ nodes/Animation/position = Vector2(100, 140)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_1g36q")
 "nodes/Animation 2/position" = Vector2(-80, 260)
 nodes/output/position = Vector2(420, 160)
-node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"Animation", &"Add2", 1, &"Animation 2"]
+node_connections = [&"Add2", 0, &"Animation", &"Add2", 1, &"Animation 2", &"output", 0, &"Add2"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h8ft2"]
 animation = &"spit_attack"

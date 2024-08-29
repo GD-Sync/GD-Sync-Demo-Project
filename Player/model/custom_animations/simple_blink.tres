@@ -13,8 +13,8 @@ tracks/0/path = NodePath("Armature/Skeleton3D/gdbot_mesh:surface_material_overri
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.5, 1.7, 1.9, 2.1, 2.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.5, 1.7, 1.9, 2.1, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("1_vbky0"), ExtResource("2_xwfhj"), ExtResource("1_vbky0"), ExtResource("2_xwfhj"), ExtResource("1_vbky0")]
+"values": [ExtResource("1_vbky0"), ExtResource("1_vbky0"), ExtResource("2_xwfhj"), ExtResource("1_vbky0"), ExtResource("2_xwfhj"), ExtResource("1_vbky0")]
 }

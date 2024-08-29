@@ -21,4 +21,3 @@ func _on_continue_pressed():
 	GDSync.set_player_data("Color", %Color.color)
 	
 	get_tree().change_scene_to_file("res://Menus/lobby_browsing_menu.tscn")
-

@@ -91,5 +91,3 @@ func _on_sender_id_toggled(button_pressed):
 
 func _on_description_meta_clicked(meta):
 	OS.shell_open(meta)
-
-

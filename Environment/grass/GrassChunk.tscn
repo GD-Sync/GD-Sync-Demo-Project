@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://c2xc3c6l20leq"]
 
 [ext_resource type="Material" uid="uid://ctfphybt4ar4e" path="res://Environment/grass/grass_mat.tres" id="1_7g28l"]
 [ext_resource type="ArrayMesh" uid="uid://dbeiaffqjay74" path="res://Environment/grass/grass.obj" id="2_6vbeq"]

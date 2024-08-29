@@ -2068,7 +2068,7 @@ nodes/Animation/node = SubResource("AnimationNodeAnimation_vded2")
 nodes/Animation/position = Vector2(-240, 40)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_vaij3")
 "nodes/Animation 2/position" = Vector2(-240, 200)
-node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"Animation", &"Add2", 1, &"Animation 2"]
+node_connections = [&"Add2", 0, &"Animation", &"Add2", 1, &"Animation 2", &"output", 0, &"Add2"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_roctp"]
 advance_mode = 2
@@ -2111,7 +2111,7 @@ nodes/Animation/position = Vector2(-180, 260)
 nodes/output/position = Vector2(340, 200)
 nodes/poweroff/node = SubResource("AnimationNodeAnimation_5ih6k")
 nodes/poweroff/position = Vector2(-20, 140)
-node_connections = [&"output", 0, &"Add2", &"Add2", 0, &"poweroff", &"Add2", 1, &"Animation"]
+node_connections = [&"Add2", 0, &"poweroff", &"Add2", 1, &"Animation", &"output", 0, &"Add2"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4pemh"]
 advance_mode = 2
