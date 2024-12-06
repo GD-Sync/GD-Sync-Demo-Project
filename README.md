@@ -19,6 +19,9 @@ Delve into our extensive [Documentation](https://www.gd-sync.com/documentation) 
 ## About GD-Sync
 Born from the challenges of multiplayer game development, GD-Sync is a solution by game developers, for game developers. We provide a robust infrastructure that scales from indie projects to globally successful multiplayer games. Learn more about our journey and vision [here](https://www.gd-sync.com).
 
+## Credits
+Original TPS template provided by [GDQuest](https://gdquest-demos.github.io/godot-4-3d-third-person-controller/). This demo project has been modified to include multiplayer using GD-Sync.
+
 
 ---
 
