@@ -6,9 +6,7 @@ func _init():
 	GDSync.host_changed.connect(host_changed)
 	GDSync.client_joined.connect(client_joined)
 	GDSync.client_left.connect(client_left)
-	
-#	Expose this function to the plugin so it may be called remotely
-	GDSync.expose_func(switch_scene)
+	GDSync.change_scene_called.connect(change_scene_called)
 
 func disconnected():
 	get_tree().change_scene_to_file("res://Menus/main_menu.tscn")
@@ -49,18 +47,18 @@ func client_left(client_id : int):
 #	Update the current player count display
 	%PlayerCount.text = str(GDSync.get_lobby_player_count())+"/"+str(GDSync.get_lobby_player_limit())
 
+func change_scene_called(scene_path : String):
+	%Start.visible = false
+	%Waiting.visible = false
+	%Leave.visible = false
+	%Loading.visible = true
+
 func _on_start_pressed():
 #	Close the lobby so that no new players can join
 	GDSync.close_lobby()
 	
-#	Call the "switch_scene" function on all other clients in the lobby
-	GDSync.call_func(switch_scene)
-	
-#	Make sure to call it for yourself!
-	switch_scene()
-
-func switch_scene():
-	get_tree().change_scene_to_file("res://Main.tscn")
+#	Switch scenes using GD-Sync
+	GDSync.change_scene("res://Main.tscn")
 
 func _on_leave_pressed():
 #	Leave the current lobby and switch back to the lobby browser

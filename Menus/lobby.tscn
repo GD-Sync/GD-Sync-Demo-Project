@@ -74,6 +74,15 @@ text = "Waiting for host to start."
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Loading" type="Label" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "Loading..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
@@ -86,6 +95,7 @@ theme = ExtResource("2_s2cyl")
 text = "START"
 
 [node name="Leave" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 theme = ExtResource("2_s2cyl")
