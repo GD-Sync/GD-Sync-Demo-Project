@@ -216,7 +216,7 @@ func _ready():
 func start_multiplayer() -> void:
 	_connection_controller.start_multiplayer()
 
-##An alternative for get_tree().quit(). Only used if you log into a GD-Sync account using [method login]. 
+##An alternative for get_tree().quit(). Only use if you log into a GD-Sync account using [method login]. 
 ##When quiting while logged in the plugin makes some callbacks to the server to update information like 
 ##your friend status.
 func quit() -> void:
