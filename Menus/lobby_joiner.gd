@@ -57,4 +57,4 @@ func _on_join_pressed():
 #	Join the lobby with the given name.
 #	Password is optional and only used for lobbies with a password.
 #	If the lobby does not have a password, the password parameter is simply disregarded.
-	GDSync.join_lobby(%JoinName.text, %JoinPassword.text)
+	GDSync.lobby_join(%JoinName.text, %JoinPassword.text)

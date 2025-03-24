@@ -36,6 +36,8 @@ var connection_controller
 var session_controller
 var data_controller
 
+var settings_applied : bool = false
+
 func _ready() -> void:
 	name = "RequestProcessor"
 	GDSync = get_node("/root/GDSync")
@@ -111,7 +113,7 @@ func check_request_size_safety(requests : Array) -> Array:
 func unpack_packet(bytes : PackedByteArray) -> void:
 	var packet : Array = bytes_to_var(bytes)
 	var encryptedBytes : PackedByteArray
-	var message : Dictionary
+	var requests : Array
 	
 	if connection_controller.is_local():
 		encryptedBytes = packet
@@ -123,11 +125,18 @@ func unpack_packet(bytes : PackedByteArray) -> void:
 		var requestBytes : PackedByteArray = connection_controller.decryptor.update(encryptedBytes)
 		var padding : int = packet[ENUMS.PACKET_VALUE.PADDING]
 		requestBytes.resize(requestBytes.size()-packet[1])
-		message = bytes_to_var(requestBytes)
+		
+		if !settings_applied:
+			var message : Dictionary = bytes_to_var(requestBytes)
+			requests = message[ENUMS.PACKET_VALUE.CLIENT_REQUESTS]
+		else:
+			requests = bytes_to_var(requestBytes)
 	else:
-		if !connection_controller.is_local(): message = bytes_to_var(encryptedBytes)
-	
-	var requests : Array = message[ENUMS.PACKET_VALUE.CLIENT_REQUESTS] if !connection_controller.is_local() else packet
+		if !connection_controller.is_local():
+			var message : Dictionary = bytes_to_var(encryptedBytes)
+			requests = message[ENUMS.PACKET_VALUE.CLIENT_REQUESTS]
+		else:
+			requests = packet
 	
 	for r in requests:
 		var request : Array = r
@@ -175,6 +184,7 @@ func process_message(request : Array) -> void:
 			GDSync.lobby_creation_failed.emit(request[ENUMS.MESSAGE_DATA.VALUE], request[ENUMS.MESSAGE_DATA.ERROR])
 		ENUMS.MESSAGE_TYPE.LOBBY_JOINED:
 			data_controller.set_friend_status()
+			await get_tree().process_frame
 			GDSync.lobby_joined.emit(request[ENUMS.MESSAGE_DATA.VALUE])
 		ENUMS.MESSAGE_TYPE.LOBBY_JOIN_FAILED:
 			GDSync.lobby_join_failed.emit(request[ENUMS.MESSAGE_DATA.VALUE], request[ENUMS.MESSAGE_DATA.ERROR])
@@ -200,7 +210,7 @@ func process_message(request : Array) -> void:
 			session_controller.set_sender_id(request[ENUMS.MESSAGE_DATA.VALUE])
 		ENUMS.MESSAGE_TYPE.KICKED:
 			GDSync.kicked.emit()
-			GDSync.leave_lobby()
+			GDSync.lobby_leave()
 
 func handle_critical_error(error : int) -> void:
 	match error:
@@ -326,6 +336,8 @@ func apply_settings() -> void:
 	
 	requestsSERV.append(api_version_request)
 	requestsSERV.append(use_sender_id_request)
+	
+	settings_applied = true
 
 func secure_connection() -> void:
 	var request : Array = [
@@ -345,7 +357,7 @@ func secure_connection() -> void:
 			set_connect_time(session_controller.connect_time)
 			session_controller.connect_time = 0
 		
-		GDSync.join_lobby(session_controller.lobby_name, session_controller.lobby_password)
+		GDSync.lobby_join(session_controller.lobby_name, session_controller.lobby_password)
 	
 	GDSync.emit_signal("connected")
 
@@ -521,6 +533,14 @@ func create_lobby_visiblity_request(public : bool) -> void:
 	var request : Array = [
 		ENUMS.REQUEST_TYPE.SET_LOBBY_VISIBILITY,
 		public
+	]
+	
+	requestsSERV.append(request)
+
+func create_change_lobby_password_request(password : String) -> void:
+	var request : Array = [
+		ENUMS.REQUEST_TYPE.CHANGE_PASSWORD,
+		password
 	]
 	
 	requestsSERV.append(request)

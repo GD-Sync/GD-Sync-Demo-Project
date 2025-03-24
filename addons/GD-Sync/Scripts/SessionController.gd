@@ -79,6 +79,7 @@ func _ready() -> void:
 	synced_time = randf_range(0, 1000)
 
 func _process(delta):
+	if !GDSync.is_active(): return
 	handle_events(delta)
 
 func handle_events(delta : float) -> void:
@@ -101,6 +102,9 @@ func sync_timer(time : float) -> void:
 	remote_time = time
 	remote_time_counter = 0
 	remote_time_latency = 0.0
+	
+	if(abs(time - synced_time) > 0.5): synced_time = remote_time
+	
 	for i in range(5):
 		await get_tree().process_frame
 		GDSync.call_func_on(GDSync.get_host(), get_timer_latency, [GDSync.get_client_id(), Time.get_unix_time_from_system()])
@@ -143,10 +147,10 @@ func broadcast_player_data() -> void:
 	var own_id : int = GDSync.get_client_id()
 	GDSync.set_player_username(get_player_data(own_id, "Username", ""))
 	
-	var own_data : Dictionary = GDSync.get_all_player_data(own_id)
+	var own_data : Dictionary = GDSync.player_get_all_data(own_id)
 	for key in own_data:
 		if key != "Username":
-			GDSync.set_player_data(key, own_data[key])
+			GDSync.player_set_data(key, own_data[key])
 
 func set_lobby_data(name : String, password : String) -> void:
 	synced_time = 0.0
@@ -164,11 +168,15 @@ func lobby_left() -> void:
 	node_path_index_cache.clear()
 	name_cache.clear()
 	name_index_cache.clear()
+	owner_cache.clear()
+	events.clear()
 	sender_id = -1
 	
 	lobby_name = ""
 	lobby_password = ""
 	own_lobby = false
+	
+	synced_time = 0.0
 	
 	for id in player_data.keys():
 		if id != own_id:
@@ -178,6 +186,8 @@ func client_joined(client_id : int) -> void:
 	if client_id == GDSync.get_client_id(): return
 	
 	if GDSync.is_host():
+		synced_time_cooldown = 0.0
+		
 		for event in events:
 			GDSync.call_func_on(client_id, register_event, [
 				event["Name"],
@@ -306,6 +316,11 @@ func override_lobby_data(data : Dictionary) -> void:
 func get_player_limit() -> int:
 	if !lobby_data.has("PlayerLimit"): return 0
 	return lobby_data["PlayerLimit"]
+
+func lobby_has_password() -> bool:
+	if lobby_data.has("HasPassword"):
+		return lobby_data["HasPassword"]
+	return false
 
 func lobby_data_changed(key : String) -> void:
 	if !lobby_data.has("Data"): return

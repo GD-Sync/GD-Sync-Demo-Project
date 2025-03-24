@@ -3,6 +3,9 @@ extends Control
 func _ready():
 #	Make sure to handle disconnects!
 	GDSync.disconnected.connect(disconnected)
+	
+	if GDSync.steam_integration_enabled():
+		GDSync.steam_join_request.connect(_on_lobby_browser_join_pressed)
 
 func disconnected():
 #	Diconnected. Jump back to main menu

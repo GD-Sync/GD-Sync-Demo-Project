@@ -10,7 +10,7 @@ func _on_back_pressed():
 	%CreateMessage.text = ""
 
 func _on_create_pressed():
-	GDSync.create_lobby(
+	GDSync.lobby_create(
 		%LobbyName.text,
 		%Password.text,
 		%Visible.button_pressed,
@@ -42,4 +42,3 @@ func lobby_creation_failed(lobby_name : String, error : int):
 			%CreateMessage.text = "The data have exceeded the 2048 byte limit."
 		ENUMS.LOBBY_CREATION_ERROR.ON_COOLDOWN:
 			%CreateMessage.text = "Please wait a few seconds before creating another lobby."
-

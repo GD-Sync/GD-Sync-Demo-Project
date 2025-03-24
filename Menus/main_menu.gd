@@ -10,7 +10,7 @@ func _ready():
 func _on_connect_pressed():
 	%Connect.disabled = true
 	
-#	Start the multiplayer plugin
+	#Start the multiplayer plugin
 	GDSync.start_multiplayer()
 
 func _on_quit_pressed():

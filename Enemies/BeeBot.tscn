@@ -176,32 +176,39 @@ size = Vector3(0.1, 0.5, 1)
 [node name="FlyingEnemy" type="RigidBody3D" groups=["damageables", "targeteables"]]
 collision_layer = 3
 gravity_scale = 0.0
-sleeping = true
 continuous_cd = true
+sleeping = true
 script = ExtResource("1_eehkx")
 
 [node name="BulletInstantiator" type="Node" parent="."]
 script = ExtResource("2_5rc6f")
-target_location = NodePath("")
+spawn_type = 1
+target_location = null
 scene = ExtResource("3_ajkwk")
-replicate_on_join = true
 sync_starting_changes = true
-excluded_properties = PackedStringArray()
 
 [node name="CoinInstantiator" type="Node" parent="."]
 script = ExtResource("2_5rc6f")
-target_location = NodePath("")
+spawn_type = 1
+target_location = null
 scene = ExtResource("4_ludsr")
-replicate_on_join = true
 sync_starting_changes = true
-excluded_properties = PackedStringArray()
 
 [node name="PropertySynchronizer" type="Node" parent="."]
 script = ExtResource("5_hmof1")
 process = 1
 refresh_rate = 20
 node_path = NodePath("..")
-properties = PackedStringArray("position", "basis")
+property_name = "position"
+interpolated = true
+interpolation_speed = 15.0
+
+[node name="PropertySynchronizer2" type="Node" parent="."]
+script = ExtResource("5_hmof1")
+process = 1
+refresh_rate = 20
+node_path = NodePath("..")
+property_name = "basis"
 interpolated = true
 interpolation_speed = 15.0
 
@@ -237,10 +244,10 @@ mesh = SubResource("BoxMesh_qjgky")
 skeleton = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MeshRoot"]
+autoplay = "default"
 libraries = {
 "": SubResource("AnimationLibrary_wnpkd")
 }
-autoplay = "default"
 
 [node name="bee_root" parent="MeshRoot" instance=ExtResource("2_btoc7")]
 transform = Transform3D(0.999781, 0.0209424, 0, -0.0164124, 0.783522, 0.621148, 0.0130083, -0.621012, 0.783694, -0.0294347, -0.348716, 0.106444)

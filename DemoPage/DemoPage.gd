@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func exit():
 #	Leave the current lobby
-	GDSync.leave_lobby()
+	GDSync.lobby_leave()
 	
 #	Return to the lobby browser
 	get_tree().change_scene_to_file("res://Menus/lobby_browsing_menu.tscn")
@@ -52,4 +52,3 @@ func disable_controls():
 
 func enable_controls():
 	Input.mouse_mode = _demo_mouse_mode
-

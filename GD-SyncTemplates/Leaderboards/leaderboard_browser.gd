@@ -38,14 +38,14 @@ func show_current_page() -> void:
 	clear_page()
 	page_label.text = str(current_page)+"/"+str(final_page)
 	
-	var response : Dictionary = await GDSync.browse_leaderboard(leaderboard_name, page_size, current_page)
+	var response : Dictionary = await GDSync.leaderboard_browse_scores(leaderboard_name, page_size, current_page)
 	var response_code : int = response["Code"]
 	
 	#If the page changed while doing the request, discard everything
 	if request_page != current_page:
 		return
 	
-	if response_code != ENUMS.BROWSE_LEADERBOARD_RESPONSE_CODE.SUCCESS:
+	if response_code != ENUMS.LEADERBOARD_BROWSE_SCORES_RESPONSE_CODE.SUCCESS:
 		show_browse_error(response_code)
 	else:
 		final_page = response["FinalPage"]
@@ -69,20 +69,17 @@ func show_browse_error(response_code : int) -> void:
 	var error : String = "Browse leaderboard error: "
 	
 	match(response_code):
-		ENUMS.BROWSE_LEADERBOARD_RESPONSE_CODE.NO_RESPONSE_FROM_SERVER:
+		ENUMS.LEADERBOARD_BROWSE_SCORES_RESPONSE_CODE.NO_RESPONSE_FROM_SERVER:
 			error += "No response from server."
-		ENUMS.BROWSE_LEADERBOARD_RESPONSE_CODE.DATA_CAP_REACHED:
+		ENUMS.LEADERBOARD_BROWSE_SCORES_RESPONSE_CODE.DATA_CAP_REACHED:
 			error += "Data transfer cap has been reached."
-		ENUMS.BROWSE_LEADERBOARD_RESPONSE_CODE.RATE_LIMIT_EXCEEDED:
+		ENUMS.LEADERBOARD_BROWSE_SCORES_RESPONSE_CODE.RATE_LIMIT_EXCEEDED:
 			error += "Rate limit exceeded, please wait and try again."
-		ENUMS.BROWSE_LEADERBOARD_RESPONSE_CODE.NO_DATABASE:
+		ENUMS.LEADERBOARD_BROWSE_SCORES_RESPONSE_CODE.NO_DATABASE:
 			error += "API key has no linked database."
-		ENUMS.BROWSE_LEADERBOARD_RESPONSE_CODE.NOT_LOGGED_IN:
+		ENUMS.LEADERBOARD_BROWSE_SCORES_RESPONSE_CODE.NOT_LOGGED_IN:
 			error += "Client isn't logged-in."
-		ENUMS.BROWSE_LEADERBOARD_RESPONSE_CODE.LEADERBOARD_DOESNT_EXIST:
+		ENUMS.LEADERBOARD_BROWSE_SCORES_RESPONSE_CODE.LEADERBOARD_DOESNT_EXIST:
 			error += "The leaderboard \""+leaderboard_name+"\" does not exist"
 	
 	push_error(error)
-
-
-

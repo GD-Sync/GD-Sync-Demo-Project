@@ -18,7 +18,7 @@ func create_account() -> void:
 	var username : String = username_input.text
 	var password : String = password_input.text
 	
-	var response_code : int = await GDSync.create_account(email, username, password)
+	var response_code : int = await GDSync.account_create(email, username, password)
 	
 	if response_code == ENUMS.ACCOUNT_CREATION_RESPONSE_CODE.SUCCESS:
 		error_text.text = ""

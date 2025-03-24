@@ -9,7 +9,7 @@ func _enter_tree():
 	GDSync.disconnected.connect(disconnected)
 	
 #	Add player models for all clients already ingame
-	for id in GDSync.get_all_clients():
+	for id in GDSync.lobby_get_all_clients():
 		client_joined(id)
 
 func disconnected():

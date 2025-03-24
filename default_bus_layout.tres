@@ -1,0 +1,27 @@
+[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://5hscon6qex62"]
+
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_riv4h"]
+resource_name = "SpectrumAnalyzer"
+buffer_length = 0.2
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_ce0rr"]
+resource_name = "Compressor"
+threshold = -10.0
+
+[sub_resource type="AudioEffectRecord" id="AudioEffectRecord_kcihs"]
+resource_name = "Record"
+format = 0
+
+[resource]
+bus/1/name = &"VoiceRecord"
+bus/1/solo = false
+bus/1/mute = true
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_riv4h")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectCompressor_ce0rr")
+bus/1/effect/1/enabled = true
+bus/1/effect/2/effect = SubResource("AudioEffectRecord_kcihs")
+bus/1/effect/2/enabled = true

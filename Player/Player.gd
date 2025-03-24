@@ -72,10 +72,10 @@ func set_multiplayer_data():
 	var client_id : int = name.to_int()
 	
 #	Give the player model the color of this client
-	_character_skin.set_color(GDSync.get_player_data(client_id, "Color", Color.WHITE))
+	_character_skin.set_color(GDSync.player_get_data(client_id, "Color", Color.WHITE))
 	
 #	Display the username of this client
-	_username.text = GDSync.get_player_data(client_id, "Username", "Unkown")
+	_username.text = GDSync.player_get_data(client_id, "Username", "Unkown")
 	
 #	Make sure to only display the username of OTHER players, not yourself
 	_username.visible = !GDSync.is_gdsync_owner(self)
