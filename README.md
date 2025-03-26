@@ -25,6 +25,6 @@ Original TPS template provided by [GDQuest](https://gdquest-demos.github.io/godo
 
 ---
 
-© 2024 GD-Sync. All rights reserved.
+© 2025 GD-Sync. All rights reserved.
 - [Terms of Service](https://www.gd-sync.com/terms)
 - [Privacy Policy](https://www.gd-sync.com/privacy-policy)
