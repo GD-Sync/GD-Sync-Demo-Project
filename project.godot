@@ -15,13 +15,13 @@ privateKey="fdc45eb1461da357"
 uniqueUsername=false
 useSenderID=true
 csharp=false
-version="0.10"
+version="0.11"
 
 [application]
 
-config/name="GD-Sync Demo Private"
+config/name="GD-Sync Demo Project"
 run/main_scene="res://Menus/main_menu.tscn"
-config/features=PackedStringArray("4.3", "C#", "Forward Plus")
+config/features=PackedStringArray("4.3", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.png"
 

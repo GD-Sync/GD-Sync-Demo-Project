@@ -2,13 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mftmsdpmjhld"
+uid="uid://c6rlhkxhj31bn"
 path.s3tc="res://.godot/imported/bee_bot_wing_pattern.png-503aabf76e31a183b1cae735f4e7e973.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 

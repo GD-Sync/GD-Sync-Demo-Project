@@ -2,13 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://curubmsogtvwy"
+uid="uid://bnevay1g3qnn6"
 path.s3tc="res://.godot/imported/CoinModel_coin_roughnes.png-3d8cb071f92e56d6ca3bddb186426943.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 
