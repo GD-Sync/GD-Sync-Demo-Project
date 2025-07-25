@@ -1,4 +1,5 @@
-extends RigidBody3D
+@tool
+extends SynchronizedRigidBody3D
 
 const COINS_COUNT := 5
 
@@ -8,6 +9,9 @@ const COINS_COUNT := 5
 @onready var _box_instantiator : Node = $BoxInstantiator
 
 func _ready():
+	super._ready()
+	
+	if Engine.is_editor_hint(): return
 	GDSync.expose_func(destroy_box)
 
 func damage(_impact_point: Vector3, _force: Vector3):

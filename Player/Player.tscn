@@ -124,6 +124,8 @@ node_path = NodePath("..")
 properties = PackedStringArray("position", "basis")
 interpolated = true
 interpolation_speed = 15.0
+extrapolated = true
+max_extrapolation_time = 0.2
 
 [node name="BulletInstantiator" type="Node" parent="."]
 script = ExtResource("3_evbh7")
@@ -203,6 +205,8 @@ node_path = NodePath("..")
 properties = PackedStringArray("position")
 interpolated = true
 interpolation_speed = 15.0
+extrapolated = false
+max_extrapolation_time = 0.2
 
 [node name="PropertySynchronizer2" type="Node" parent="CharacterRotationRoot"]
 script = ExtResource("2_gal3n")
@@ -213,6 +217,8 @@ node_path = NodePath("..")
 properties = PackedStringArray("basis")
 interpolated = true
 interpolation_speed = 15.0
+extrapolated = true
+max_extrapolation_time = 0.2
 
 [node name="MeleeAnchor" type="Node3D" parent="CharacterRotationRoot"]
 
@@ -298,7 +304,7 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.812403)
 
 [node name="godot_coin" parent="PlayerUI/CoinsContainer/SubViewportContainer/SubViewport/Coin" index="0"]
-transform = Transform3D(0.948219, 0, -0.317607, 0, 1, 0, 0.317607, 0, 0.948219, 0, 0, 0)
+transform = Transform3D(-0.137677, 0, -0.990474, 0, 1, 0, 0.990474, 0, -0.137677, 0, 0, 0)
 y_amplitude = 0.0
 
 [node name="Camera3D" type="Camera3D" parent="PlayerUI/CoinsContainer/SubViewportContainer/SubViewport"]

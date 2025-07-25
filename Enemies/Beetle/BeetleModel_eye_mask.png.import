@@ -2,13 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfh1awedda123"
+uid="uid://kl656h56qfax"
 path.s3tc="res://.godot/imported/BeetleModel_eye_mask.png-4226bdeb5b076b8fafce24b05fcef5d5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 

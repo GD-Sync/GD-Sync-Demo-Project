@@ -1666,7 +1666,6 @@ cancel_action_name = "pause"
 
 [node name="StageMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_mil5a")
-autoplay = true
 
 [connection signal="typing_started" from="ChatAnchor/TextChat" to="DemoPage" method="disable_controls"]
 [connection signal="typing_stopped" from="ChatAnchor/TextChat" to="DemoPage" method="enable_controls"]

@@ -7,6 +7,7 @@ func _enter_tree():
 	GDSync.client_joined.connect(client_joined)
 	GDSync.client_left.connect(client_left)
 	GDSync.disconnected.connect(disconnected)
+	GDSync.kicked.connect(kicked)
 	
 #	Add player models for all clients already ingame
 	for id in GDSync.lobby_get_all_clients():
@@ -14,6 +15,9 @@ func _enter_tree():
 
 func disconnected():
 	get_tree().change_scene_to_file("res://Menus/main_menu.tscn")
+
+func kicked():
+	get_tree().change_scene_to_file("res://Menus/lobby_browsing_menu.tscn")
 
 func client_joined(client_id : int):
 #	Instantiate a player

@@ -2,13 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1y2470lvvr7a"
+uid="uid://bfd3x7gft0yb3"
 path.s3tc="res://.godot/imported/JumpingPadModel_jump_pad_normal.png-4f2fcfcb79d9d306d4d73a3d5a608c4c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 

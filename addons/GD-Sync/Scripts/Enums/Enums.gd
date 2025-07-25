@@ -1,6 +1,6 @@
 class_name ENUMS
 
-#Copyright (c) 2024 GD-Sync.
+#Copyright (c) 2025 GD-Sync.
 #All rights reserved.
 #
 #Redistribution and use in source form, with or without modification,
@@ -87,7 +87,8 @@ enum REQUEST_TYPE
 	SET_SETTING,
 	SET_CLIENT_ID,
 	KICK_PLAYER,
-	CHANGE_PASSWORD
+	CHANGE_PASSWORD,
+	GET_PUBLIC_LOBBY
 }
 
 enum MESSAGE_TYPE
@@ -119,6 +120,7 @@ enum MESSAGE_TYPE
 	SET_SENDER_ID,
 	SET_DATA_USAGE,
 	KICKED,
+	LOBBY_RECEIVED
 }
 
 enum SETTING

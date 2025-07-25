@@ -195,6 +195,11 @@ func _physics_process(delta: float) -> void:
 	var epsilon := 0.001
 	if delta_position.length() < epsilon and velocity.length() > epsilon:
 		global_position += get_wall_normal() * 0.1
+	
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is SynchronizedRigidBody3D:
+			c.get_collider().apply_central_impulse(-c.get_normal())
 
 
 func attack() -> void:

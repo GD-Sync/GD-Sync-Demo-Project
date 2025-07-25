@@ -19,63 +19,30 @@ var moving_blend_path := "parameters/StateMachine/move/blend_position"
 
 func _ready():
 	main_animation_player["playback_default_blend_time"] = 0.1
-	
-#	Expose all functions that may be called remotely
-	GDSync.expose_func(set_moving)
-	GDSync.expose_func(set_moving_speed)
-	GDSync.expose_func(jump)
-	GDSync.expose_func(fall)
-	GDSync.expose_func(punch)
 
 func set_moving(value : bool):
 #	If the animation state changes, synchronize it with all other clients
 #	Only send this if this is YOUR player model
-	if moving != value and GDSync.is_gdsync_owner(self): GDSync.call_func(set_moving, [value])
-	
 	moving = value
 	if moving:
 		state_machine.travel("move")
 	else:
 		state_machine.travel("idle")
 
-var _broadcasted_speed : float = 0.0
 func set_moving_speed(value : float):
 	move_speed = clamp(value, 0.0, 1.0)
 	animation_tree.set(moving_blend_path, move_speed)
-	
-	if abs(_broadcasted_speed-move_speed) > 0.1:
-		_broadcasted_speed = move_speed
-		
-		#	Update the movement speed
-		#	Only send this if this is YOUR player model
-		if GDSync.is_gdsync_owner(self): GDSync.call_func(set_moving_speed, [value])
-
 
 func jump():
 	state_machine.travel("jump")
-	
-#	Activate the jump animation
-#	Only send this if this is YOUR player model
-	if GDSync.is_gdsync_owner(self): GDSync.call_func(jump)
 
 
 func fall():
 	state_machine.travel("fall")
-	
-#	Activate the fall animation
-#	Only send this if this is YOUR player model
-	if GDSync.is_gdsync_owner(self): GDSync.call_func(fall)
-	
 	moving = false
-
 
 func punch():
 	animation_tree.set("parameters/PunchOneShot/request", 1)
-	
-#	Activate the punch animation
-#	Only send this if this is YOUR player model
-	if GDSync.is_gdsync_owner(self): GDSync.call_func(punch)
-
 
 func set_color(color : Color):
 	color.a = 0.01
