@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cnj0t3ad178q6"]
 
-[ext_resource type="Script" path="res://DemoPage/DemoPage.gd" id="1_4brsx"]
-[ext_resource type="Shader" path="res://DemoPage/Assets/BlurShader.gdshader" id="2_07raf"]
+[ext_resource type="Script" uid="uid://1gijyqmylsux" path="res://DemoPage/DemoPage.gd" id="1_4brsx"]
+[ext_resource type="Shader" uid="uid://cbbw767k6b70q" path="res://DemoPage/Assets/BlurShader.gdshader" id="2_07raf"]
 [ext_resource type="Texture2D" uid="uid://d2pl6xyfyub5k" path="res://addons/GD-Sync/UI/ConfigMenu/GDSLogo.png" id="3_4t15x"]
 [ext_resource type="FontFile" uid="uid://ch2aef1jex81f" path="res://DemoPage/Fonts/Montserrat-Bold.ttf" id="6_r37av"]
 

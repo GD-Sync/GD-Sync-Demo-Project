@@ -1,10 +1,10 @@
 [gd_scene load_steps=31 format=3 uid="uid://d28tem7s0fqin"]
 
-[ext_resource type="Script" path="res://Enemies/BeeBot/bee_root.gd" id="1_eu6t5"]
+[ext_resource type="Script" uid="uid://b4ld8jqpyd8gp" path="res://Enemies/BeeBot/bee_root.gd" id="1_eu6t5"]
 [ext_resource type="PackedScene" uid="uid://bk3d0okgrcn35" path="res://Enemies/BeeBot/bee_bot.glb" id="1_icaj7"]
-[ext_resource type="Shader" path="res://shared/shaders/face_mat.gdshader" id="2_7vdnh"]
+[ext_resource type="Shader" uid="uid://cjq4qidaa6brg" path="res://shared/shaders/face_mat.gdshader" id="2_7vdnh"]
 [ext_resource type="Texture2D" uid="uid://d3i42hq0p8ijb" path="res://shared/eye_mask.png" id="3_qgh3u"]
-[ext_resource type="Shader" path="res://Enemies/BeeBot/bee_wings_shader.gdshader" id="4_hnl3k"]
+[ext_resource type="Shader" uid="uid://c37i7haeid8i8" path="res://Enemies/BeeBot/bee_wings_shader.gdshader" id="4_hnl3k"]
 [ext_resource type="Texture2D" uid="uid://c4mdnjycm0yse" path="res://Enemies/BeeBot/wing_pattern.png" id="5_expcp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pylk6"]
@@ -17,21 +17,21 @@ emission = Color(0.737255, 1, 0.505882, 1)
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("2_7vdnh")
+shader_parameter/face_texture = ExtResource("3_qgh3u")
 shader_parameter/intensity = 4.0
 shader_parameter/screen_color = Color(0.737255, 1, 0.505882, 0.00784314)
 shader_parameter/screen_red_offset = Vector2(0, 0)
 shader_parameter/screen_green_offset = Vector2(0, 0)
 shader_parameter/screen_blue_offset = Vector2(0, 0)
 shader_parameter/pixel_size = 32.0
-shader_parameter/face_texture = ExtResource("3_qgh3u")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hnyo1"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("4_hnl3k")
+shader_parameter/wing_pattern_sampler = ExtResource("5_expcp")
 shader_parameter/emission_color = Color(0.737255, 1, 0.505882, 1)
 shader_parameter/global_intensity = 1.0
-shader_parameter/wing_pattern_sampler = ExtResource("5_expcp")
 
 [sub_resource type="Animation" id="Animation_4yns1"]
 resource_name = "Idle"
@@ -1239,11 +1239,11 @@ tracks/40/keys = PackedFloat32Array(0, 1, -9.19819e-09, -5.55632e-10, -0.0252876
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nto2u"]
 _data = {
-"Idle": SubResource("Animation_4yns1"),
-"RESET": SubResource("Animation_l01on"),
-"head_movement": SubResource("Animation_ccnon"),
-"power_off": SubResource("Animation_4sdv8"),
-"spit_attack": SubResource("Animation_xw0yu")
+&"Idle": SubResource("Animation_4yns1"),
+&"RESET": SubResource("Animation_l01on"),
+&"head_movement": SubResource("Animation_ccnon"),
+&"power_off": SubResource("Animation_4sdv8"),
+&"spit_attack": SubResource("Animation_xw0yu")
 }
 
 [sub_resource type="Animation" id="Animation_jgat2"]
@@ -1286,7 +1286,7 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eu2hu"]
 _data = {
-"light_power_off": SubResource("Animation_jgat2")
+&"light_power_off": SubResource("Animation_jgat2")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vvdbj"]

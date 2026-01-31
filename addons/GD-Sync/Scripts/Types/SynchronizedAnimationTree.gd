@@ -1,9 +1,9 @@
 @tool
-@icon("res://addons/GD-Sync/Scripts/Types/SynchronizedAnimationTree.gd")
+@icon("res://addons/GD-Sync/UI/Icons/SynchronizedAnimationTree.png")
 extends AnimationTree
 class_name SynchronizedAnimationTree
 
-#Copyright (c) 2025 GD-Sync.
+#Copyright (c) 2026 GD-Sync.
 #All rights reserved.
 #
 #Redistribution and use in source form, with or without modification,
@@ -56,7 +56,6 @@ static var _VARIABLE_INPUTS : PackedStringArray = [
 
 static var _INSTANT_INPUTS : PackedStringArray = [
 	"/active",
-	"/request",
 	"/scale"
 ]
 
@@ -84,6 +83,7 @@ func _ready() -> void:
 	GDSync.connect_gdsync_owner_changed(self, _owner_changed)
 	GDSync.host_changed.connect(_host_changed)
 	GDSync.expose_func(_travel_remote)
+	GDSync.expose_func(set)
 	
 	var property_list : Array = get_property_list()
 	
@@ -135,7 +135,12 @@ func _update_inputs(inputs : Dictionary, forced : bool = false) -> void:
 		
 		if forced or old_value != new_value:
 			inputs[input_name] = new_value
-			GDSync.sync_var(self, input_name)
+			
+			if "/active" in input_name:
+				var request : String = input_name.replace("/active", "/request")
+				GDSync.call_func(set, request, AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE if new_value else AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+			else:
+				GDSync.sync_var(self, input_name)
 
 func _update_state_machines(forced : bool = false) -> void:
 	for state_machine_path in _state_machines:
@@ -145,7 +150,7 @@ func _update_state_machines(forced : bool = false) -> void:
 		
 		if forced or old_node != new_node:
 			_state_machine_inputs[state_machine] = new_node
-			GDSync.call_func(_travel_remote, [state_machine_path, new_node])
+			GDSync.call_func(_travel_remote, state_machine_path, new_node)
 
 func _travel_remote(state_machine_path : String, node_name : String) -> void:
 	var state_machine : AnimationNodeStateMachinePlayback = _state_machines[state_machine_path]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://d34nyatdgcake"]
 
-[ext_resource type="Script" path="res://JumpingPad/JumpingPad.gd" id="1_w7mtj"]
+[ext_resource type="Script" uid="uid://cmojfcqcylql3" path="res://JumpingPad/JumpingPad.gd" id="1_w7mtj"]
 [ext_resource type="PackedScene" uid="uid://bkwfic6flrwco" path="res://JumpingPad/JumpingPadVisuals/JumpingPadModel.tscn" id="2_otx0r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dspj3"]

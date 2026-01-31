@@ -1,15 +1,15 @@
 [gd_scene load_steps=23 format=3 uid="uid://ciqrpd5675boy"]
 
-[ext_resource type="Script" path="res://Player/Player.gd" id="1_rvo1c"]
-[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd" id="2_gal3n"]
+[ext_resource type="Script" uid="uid://bk4i36icd0urs" path="res://Player/Player.gd" id="1_rvo1c"]
+[ext_resource type="Script" uid="uid://skbw4v0xt5nf" path="res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd" id="2_gal3n"]
 [ext_resource type="PackedScene" uid="uid://b2ew46dlu7u7x" path="res://Player/GrenadeLauncher.tscn" id="3_54qc4"]
-[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="3_evbh7"]
-[ext_resource type="Script" path="res://Player/CameraController.gd" id="3_qrkly"]
-[ext_resource type="Script" path="res://Player/MeleeAttackArea.gd" id="3_v1vve"]
+[ext_resource type="Script" uid="uid://bpkgvmd756kxo" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="3_evbh7"]
+[ext_resource type="Script" uid="uid://c01nbuq7k6fbs" path="res://Player/CameraController.gd" id="3_qrkly"]
+[ext_resource type="Script" uid="uid://db4ft8u1ghq2p" path="res://Player/MeleeAttackArea.gd" id="3_v1vve"]
 [ext_resource type="PackedScene" uid="uid://c54mpt43fs4wc" path="res://Player/Coin/Coin.tscn" id="4_33008"]
 [ext_resource type="PackedScene" uid="uid://c0mo8tek77du4" path="res://Player/CharacterSkin.tscn" id="4_ign62"]
 [ext_resource type="PackedScene" uid="uid://bguebyvtegnv8" path="res://Player/Bullet.tscn" id="4_v05f3"]
-[ext_resource type="Script" path="res://Player/CoinsContainer.gd" id="7_8eehq"]
+[ext_resource type="Script" uid="uid://dsmb5l2ab4kp" path="res://Player/CoinsContainer.gd" id="7_8eehq"]
 [ext_resource type="PackedScene" uid="uid://cmvw0k1muwd54" path="res://Player/Coin/CoinVisuals/CoinModel.tscn" id="8_6qxxt"]
 [ext_resource type="AudioStream" uid="uid://bx0t7f2nuk2lr" path="res://Player/Sounds/03_Step_grass_03.wav" id="10_wx4h4"]
 [ext_resource type="AudioStream" uid="uid://cbcb2d63weegs" path="res://Player/Sounds/45_Landing_01.wav" id="11_3s4i7"]
@@ -98,8 +98,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xvsui"]
 _data = {
-"Attack": SubResource("Animation_nl12d"),
-"RESET": SubResource("Animation_pts2o")
+&"Attack": SubResource("Animation_nl12d"),
+&"RESET": SubResource("Animation_pts2o")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pcytg"]

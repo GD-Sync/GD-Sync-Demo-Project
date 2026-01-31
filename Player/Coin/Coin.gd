@@ -74,7 +74,7 @@ func _collect() -> void:
 	collect_for_player(_target.get_path())
 	
 #	Collect the coin on all other clients
-	GDSync.call_func(collect_for_player, [str(_target.get_path())])
+	GDSync.call_func(collect_for_player, str(_target.get_path()))
 
 func collect_for_player(path : String):
 	var target : Node = get_node_or_null(path)

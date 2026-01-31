@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://5quswar7oaeo"]
 
-[ext_resource type="Script" path="res://Menus/lobby.gd" id="1_8ca5k"]
+[ext_resource type="Script" uid="uid://235s6tirciwg" path="res://Menus/lobby.gd" id="1_8ca5k"]
 [ext_resource type="Theme" uid="uid://5whm1igkt23h" path="res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres" id="2_s2cyl"]
 [ext_resource type="PackedScene" uid="uid://dgbv7r0yrg4yk" path="res://GD-SyncTemplates/TextChat/text_chat.tscn" id="3_w30kf"]
 

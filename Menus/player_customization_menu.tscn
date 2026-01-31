@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b7g2a4nwsfve0"]
 
 [ext_resource type="Theme" uid="uid://5whm1igkt23h" path="res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres" id="1_cpisx"]
-[ext_resource type="Script" path="res://Menus/player_customization_menu.gd" id="1_objew"]
+[ext_resource type="Script" uid="uid://dxfaabvertuje" path="res://Menus/player_customization_menu.gd" id="1_objew"]
 
 [node name="PlayerCustomizationMenu" type="Control"]
 layout_mode = 3

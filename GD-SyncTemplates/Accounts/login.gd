@@ -16,7 +16,7 @@ func login() -> void:
 	var email : String = email_input.text
 	var password : String = password_input.text
 	
-	var response : Dictionary = await GDSync.account_login(email, password)
+	var response : Dictionary = await GDSync.login(email, password)
 	var response_code : int = response["Code"]
 	
 	if response_code == ENUMS.ACCOUNT_LOGIN_RESPONSE_CODE.SUCCESS:

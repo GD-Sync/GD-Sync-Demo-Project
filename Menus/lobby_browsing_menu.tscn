@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://dxv3um0nt0768"]
 
 [ext_resource type="PackedScene" uid="uid://8qy4jenu2w1m" path="res://GD-SyncTemplates/LobbyBrowser/lobby_browser.tscn" id="1_dgkn0"]
-[ext_resource type="Script" path="res://Menus/lobby_browsing_menu.gd" id="1_q6obi"]
+[ext_resource type="Script" uid="uid://7ikaf0bhw8ki" path="res://Menus/lobby_browsing_menu.gd" id="1_q6obi"]
 [ext_resource type="Theme" uid="uid://5whm1igkt23h" path="res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres" id="3_2opek"]
-[ext_resource type="Script" path="res://Menus/lobby_creator.gd" id="4_vxmqb"]
-[ext_resource type="Script" path="res://Menus/lobby_joiner.gd" id="5_org80"]
+[ext_resource type="Script" uid="uid://bwv3ana1j5kcw" path="res://Menus/lobby_creator.gd" id="4_vxmqb"]
+[ext_resource type="Script" uid="uid://3bu0fnp6mver" path="res://Menus/lobby_joiner.gd" id="5_org80"]
 
 [node name="LobbyBrowsingMenu" type="Control"]
 layout_mode = 3

@@ -1,6 +1,6 @@
 [gd_scene load_steps=44 format=3 uid="uid://cq4m2udfv5lfg"]
 
-[ext_resource type="Script" path="res://Enemies/Beetle/BeetleModel.gd" id="1_3o2d1"]
+[ext_resource type="Script" uid="uid://dyp3bhiuc21mf" path="res://Enemies/Beetle/BeetleModel.gd" id="1_3o2d1"]
 [ext_resource type="PackedScene" uid="uid://2tiippcas1yn" path="res://Enemies/Beetle/BeetleModel.glb" id="2_sn0u1"]
 [ext_resource type="Material" uid="uid://c01o76xe4ki35" path="res://Enemies/Beetle/BeetleModel_eyes_mat.tres" id="3_bftt3"]
 [ext_resource type="Animation" uid="uid://c8nt4qdap5h01" path="res://Enemies/Beetle/custom_animation/BeetleModel_power_off_lights.res" id="4_x2t4j"]
@@ -1990,12 +1990,12 @@ tracks/53/keys = PackedFloat32Array(0, 1, 1, 1, 1)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xcbtl"]
 _data = {
-"Bob": SubResource("Animation_2861t"),
-"RESET": SubResource("Animation_w645p"),
-"headbutt": SubResource("Animation_0ak7y"),
-"idle": SubResource("Animation_m52k7"),
-"poweroff": SubResource("Animation_y1xjx"),
-"walk": SubResource("Animation_m1c8q")
+&"Bob": SubResource("Animation_2861t"),
+&"RESET": SubResource("Animation_w645p"),
+&"headbutt": SubResource("Animation_0ak7y"),
+&"idle": SubResource("Animation_m52k7"),
+&"poweroff": SubResource("Animation_y1xjx"),
+&"walk": SubResource("Animation_m1c8q")
 }
 
 [sub_resource type="Animation" id="Animation_256wp"]
@@ -2023,8 +2023,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_adlhr"]
 _data = {
-"power_off_lights": ExtResource("4_x2t4j"),
-"walk_step": SubResource("Animation_256wp")
+&"power_off_lights": ExtResource("4_x2t4j"),
+&"walk_step": SubResource("Animation_256wp")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ycuh0"]

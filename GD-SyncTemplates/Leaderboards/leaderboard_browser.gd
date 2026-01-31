@@ -38,7 +38,7 @@ func show_current_page() -> void:
 	clear_page()
 	page_label.text = str(current_page)+"/"+str(final_page)
 	
-	var response : Dictionary = await GDSync.leaderboard_browse_scores(leaderboard_name, page_size, current_page)
+	var response : Dictionary = await GDSync.browse_leaderboard(leaderboard_name, page_size, current_page)
 	var response_code : int = response["Code"]
 	
 	#If the page changed while doing the request, discard everything

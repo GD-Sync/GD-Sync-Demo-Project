@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://cmwyiep10m4u4"]
 
-[ext_resource type="Script" path="res://Box/Box.gd" id="1_oklwc"]
+[ext_resource type="Script" uid="uid://chst4b4hyplqb" path="res://Box/Box.gd" id="1_oklwc"]
 [ext_resource type="PackedScene" uid="uid://cdtq6fyl7hhgm" path="res://Box/BoxVisuals/BoxModel.glb" id="2_ggurh"]
 [ext_resource type="AudioStream" uid="uid://dd7nemvkapogt" path="res://Box/Sounds/crate-break-1-93926.wav" id="3_71fsr"]
-[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="4_rf4j5"]
+[ext_resource type="Script" uid="uid://bpkgvmd756kxo" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="4_rf4j5"]
 [ext_resource type="PackedScene" uid="uid://c54mpt43fs4wc" path="res://Player/Coin/Coin.tscn" id="5_gkdsj"]
 [ext_resource type="PackedScene" uid="uid://dds3pccqwqhbb" path="res://Box/DestroyedBox.tscn" id="6_65q0q"]
 

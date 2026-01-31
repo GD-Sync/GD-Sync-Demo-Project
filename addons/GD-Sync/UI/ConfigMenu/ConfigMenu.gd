@@ -1,7 +1,7 @@
 @tool
 extends Control
 
-#Copyright (c) 2025 GD-Sync.
+#Copyright (c) 2026 GD-Sync.
 #All rights reserved.
 #
 #Redistribution and use in source form, with or without modification,
@@ -41,8 +41,12 @@ func _ready():
 		%Protected.button_pressed = ProjectSettings.get_setting("GD-Sync/protectedMode")
 	if ProjectSettings.has_setting("GD-Sync/csharp"):
 		%CSharpSupport.button_pressed = ProjectSettings.get_setting("GD-Sync/csharp")
+	if ProjectSettings.has_setting("GD-Sync/useSenderID"):
+		%SenderID.button_pressed = ProjectSettings.get_setting("GD-Sync/useSenderID")
 	if ProjectSettings.has_setting("GD-Sync/uniqueUsername"):
 		%UniqueUsernames.button_pressed = ProjectSettings.get_setting("GD-Sync/uniqueUsername")
+	if ProjectSettings.has_setting("GD-Sync/scriptValidation"):
+		%ScriptValidation.button_pressed = ProjectSettings.get_setting("GD-Sync/scriptValidation")
 	
 	updater = Updater.new()
 	add_child(updater)
@@ -98,7 +102,13 @@ func _on_sender_id_toggled(button_pressed):
 	ProjectSettings.set_setting("GD-Sync/useSenderID", button_pressed)
 	ProjectSettings.save()
 
+func _on_script_validation_toggled(button_pressed) -> void:
+	ProjectSettings.set_setting("GD-Sync/scriptValidation", button_pressed)
+	ProjectSettings.save()
+
 func _on_description_meta_clicked(meta):
+	if meta == "log":
+		meta = OS.get_user_data_dir()+"/GD-Sync/logs"
 	OS.shell_open(meta)
 
 func _on_update_button_pressed() -> void:
@@ -112,7 +122,6 @@ func _on_update_button_pressed() -> void:
 	$AnimationPlayer.play_backwards("Downloading")
 	
 	if result:
-		print("")
-		print_rich("[color=#61ff71][b]The newest version of GD-Sync has been installed. Please restart the engine to complete the update.[/b][/color]")
+		plugin.show_message("[color=#61ff71][b]The newest version of GD-Sync has been installed. Please restart the engine to complete the update.[/b][/color]", 10.0)
 	else:
-		print_rich("[color=indianred][b]GD-Sync failed to update. Please try downloading it from the Godot Asset Library instead.[/b][/color]")
+		plugin.show_message("[color=indianred][b]GD-Sync failed to update. Please try downloading it from the Godot Asset Library instead.[/b][/color]")

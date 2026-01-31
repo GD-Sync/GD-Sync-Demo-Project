@@ -1,10 +1,10 @@
 [gd_scene load_steps=14 format=3 uid="uid://cvwkhlljkg06j"]
 
-[ext_resource type="Script" path="res://Enemies/Beetle.gd" id="1_mefon"]
+[ext_resource type="Script" uid="uid://ddvj2b3xme7t7" path="res://Enemies/Beetle.gd" id="1_mefon"]
 [ext_resource type="PackedScene" uid="uid://cq4m2udfv5lfg" path="res://Enemies/Beetle/BeetleModel.tscn" id="2_qcu3o"]
 [ext_resource type="AudioStream" uid="uid://c66nnoqtanfw2" path="res://Enemies/Sounds/robot_defeat.wav" id="3_w5eam"]
-[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd" id="4_wat0v"]
-[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="5_ybvcm"]
+[ext_resource type="Script" uid="uid://skbw4v0xt5nf" path="res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd" id="4_wat0v"]
+[ext_resource type="Script" uid="uid://bpkgvmd756kxo" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="5_ybvcm"]
 [ext_resource type="PackedScene" uid="uid://c54mpt43fs4wc" path="res://Player/Coin/Coin.tscn" id="6_ogrwu"]
 
 [sub_resource type="Animation" id="Animation_5pcps"]
@@ -90,9 +90,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sqtu2"]
 _data = {
-"RESET": SubResource("Animation_5pcps"),
-"found_player": SubResource("Animation_6k5ul"),
-"lost_player": SubResource("Animation_iekf1")
+&"RESET": SubResource("Animation_5pcps"),
+&"found_player": SubResource("Animation_6k5ul"),
+&"lost_player": SubResource("Animation_iekf1")
 }
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_h03f6"]

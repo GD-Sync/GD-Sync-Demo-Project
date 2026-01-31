@@ -3,7 +3,7 @@
 extends Node
 class_name VoiceChat
 
-#Copyright (c) 2025 GD-Sync.
+#Copyright (c) 2026 GD-Sync.
 #All rights reserved.
 #
 #Redistribution and use in source form, with or without modification,
@@ -55,16 +55,23 @@ var _record_effect : AudioEffectCapture
 var _output_stream : AudioStreamGenerator
 var _output_stream_playback : AudioStreamGeneratorPlayback
 ## The output player which will play received voice samples.
-var _output_player : Node
+var _output_player : Node : set = set_output_player
 
 var _input_configured : bool = false
 var _output_configured : bool = false
+var _muted : bool = false
 
 func set_input_device(device_name : String) -> void:
 	AudioServer.input_device = device_name
 
 func get_input_devices() -> PackedStringArray:
 	return AudioServer.get_input_device_list()
+
+func mute_microphone() -> void:
+	_muted = true
+
+func unmute_microphone() -> void:
+	_muted = false
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -97,6 +104,10 @@ func _process(delta: float) -> void:
 		return
 	
 	if _input_configured and _record_effect.get_frames_available() > 0:
+		if _muted:
+			_record_effect.clear_buffer()
+			return
+		
 		var recording_data : PackedVector2Array = _record_effect.get_buffer(_record_effect.get_frames_available())
 		var data : PackedFloat32Array = PackedFloat32Array()
 		
@@ -119,7 +130,7 @@ func _process(delta: float) -> void:
 			max_amp = max(abs(data[i]), max_amp)
 		
 		if max_amp > input_volume_threshold:
-			GDSync.call_func(_process_audio, [data, sr])
+			GDSync.call_func(_process_audio, data, sr)
 
 func _process_audio(audio : PackedFloat32Array, mixrate : float) -> void:
 	if _output_stream.mix_rate != mixrate: _output_stream.mix_rate = mixrate
@@ -208,21 +219,14 @@ func _configure_output() -> void:
 	
 	_output_stream = AudioStreamGenerator.new()
 	_output_stream.buffer_length = 0.1
-	
-	match(spatial_mode):
-		0:
-			_output_player = AudioStreamPlayer.new()
-		1:
-			_output_player = AudioStreamPlayer2D.new()
-		2:
-			_output_player = AudioStreamPlayer3D.new()
-	
-	_output_player.name = "MicOut"
-	add_child(_output_player)
 	_output_player.stream = _output_stream
 	_output_player.play()
 	
 	_output_stream_playback = _output_player.get_stream_playback()
+
+func set_output_player(p : Node) -> void:
+	_output_player = p
+	update_configuration_warnings()
 
 func _get_property_list() -> Array:
 	var properties : Array = []

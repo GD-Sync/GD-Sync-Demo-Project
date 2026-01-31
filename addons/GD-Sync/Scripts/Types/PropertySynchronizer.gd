@@ -3,7 +3,7 @@
 extends Node
 class_name PropertySynchronizer
 
-#Copyright (c) 2025 GD-Sync.
+#Copyright (c) 2026 GD-Sync.
 #All rights reserved.
 #
 #Redistribution and use in source form, with or without modification,
@@ -34,14 +34,13 @@ func synchronize(forced : bool = true, force_reliable : bool = false) -> void:
 	for property_name in _property_lookup:
 		var property_data : Dictionary = _property_lookup[property_name]
 		var new_property = node.get(property_name)
-		if !forced and new_property == property_data["TargetValue"]: continue
-		property_data["TargetValue"] = new_property
-		GDSync.call_func(_sync_received, [property_name, new_property, GDSync.get_multiplayer_time()], reliable || force_reliable)
+		if _check_property_changed(property_data, new_property):
+			GDSync.call_func(_sync_received, property_name, new_property, GDSync.get_multiplayer_time())
 
-## Temporarily pauses interpolation for [param seconds].
+## Temporarily pauses interpolation for [param seconds]. Useful when teleporting a Node from one spot to another to prevent it from gliding there.
 func pause_interpolation(seconds : float) -> void:
 	_pause_interpolation_remote(seconds)
-	GDSync.call_func(_pause_interpolation_remote, [seconds])
+	GDSync.call_func(_pause_interpolation_remote, seconds)
 
 
 
@@ -240,6 +239,23 @@ func _check_property_states(delta : float) -> void:
 		if interpolated: _interpolate(delta)
 		if extrapolated: _extrapolate(delta)
 
+func _check_property_changed(property_data : Dictionary, new_property) -> bool:
+	if property_data["Type"] == TYPE_DICTIONARY:
+		if property_data["TargetValue"] == null or !new_property.recursive_equal(property_data["TargetValue"], 5):
+			property_data["TargetValue"] = new_property.duplicate(true)
+			return true
+	
+	if property_data["Type"] == TYPE_ARRAY:
+		if new_property != property_data["TargetValue"]:
+			property_data["TargetValue"] = new_property.duplicate(true)
+			return true
+	
+	if new_property != property_data["TargetValue"]:
+		property_data["TargetValue"] = new_property
+		return true
+	
+	return false
+
 func _may_synchronize(delta : float) -> bool:
 	_current_cooldown -= delta
 	if _current_cooldown <= 0:
@@ -306,6 +322,9 @@ func _extrapolate(delta : float) -> void:
 		
 		if property_data["Type"] == TYPE_VECTOR3:
 			var vec_delta : Vector3 = target_value-last_value
+			property_data["TargetValue"] = target_value + vec_delta*extrapolate_time
+		elif property_data["Type"] == TYPE_VECTOR2:
+			var vec_delta : Vector2 = target_value-last_value
 			property_data["TargetValue"] = target_value + vec_delta*extrapolate_time
 
 func _refresh_property_lookup() -> void:

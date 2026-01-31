@@ -19,9 +19,9 @@ signal typing_stopped
 @export var message_display_count : int = 10
 ##The maximum length in characters of a message
 @export var max_message_length : int = 100
-##Makes the chat to automatically display usernames. Use GDSync.player_set_username() to set usernames.
+##Makes the chat to automatically display usernames. Use GDSync.set_username() to set usernames.
 @export var show_usernames : bool = true
-##Automatically assigns colors to the usernames in chat. Use GDSync.player_set_data("Color", color) to set colors.
+##Automatically assigns colors to the usernames in chat. Use GDSync.set_player_data("Color", color) to set colors.
 @export var show_client_colors : bool = true
 ##Adds a number in front of messages, showing which channel it came from.
 @export var show_channel_id : bool = false
@@ -120,7 +120,7 @@ func _send_message():
 		if !GDSync.player_get_data(client_id, "TextChannels", []).has(_current_typing_channel): continue
 		
 #		Send the message to the specific client
-		GDSync.call_func_on(client_id, _receive_message, [text, _current_typing_channel, GDSync.get_client_id()])
+		GDSync.call_func_on(client_id, _receive_message, text, _current_typing_channel, GDSync.get_client_id())
 	
 	stop_typing()
 

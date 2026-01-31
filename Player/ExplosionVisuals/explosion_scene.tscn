@@ -294,8 +294,8 @@ tracks/10/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ystop"]
 _data = {
-"RESET": SubResource("Animation_lg5hv"),
-"explosion": SubResource("Animation_8xfee")
+&"RESET": SubResource("Animation_lg5hv"),
+&"explosion": SubResource("Animation_8xfee")
 }
 
 [node name="Explosion" type="Node3D"]

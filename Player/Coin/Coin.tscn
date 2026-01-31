@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://c54mpt43fs4wc"]
 
 [ext_resource type="PackedScene" uid="uid://cmvw0k1muwd54" path="res://Player/Coin/CoinVisuals/CoinModel.tscn" id="1_ajpkd"]
-[ext_resource type="Script" path="res://Player/Coin/Coin.gd" id="1_netfc"]
-[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd" id="2_e56by"]
+[ext_resource type="Script" uid="uid://c8lxd8qdf2sak" path="res://Player/Coin/Coin.gd" id="1_netfc"]
+[ext_resource type="Script" uid="uid://skbw4v0xt5nf" path="res://addons/GD-Sync/Scripts/Types/PropertySynchronizer.gd" id="2_e56by"]
 [ext_resource type="AudioStream" uid="uid://dxv00m8q7huw5" path="res://Player/Coin/Audio/completetask_0.mp3" id="3_bn2wr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5al5l"]

@@ -281,7 +281,7 @@ func damage(_impact_point: Vector3, force: Vector3) -> void:
 	if GDSync.is_gdsync_owner(self):
 		apply_damage(_impact_point, force)
 	else:
-		GDSync.call_func_on(name.to_int(), apply_damage, [_impact_point, force])
+		GDSync.call_func_on(name.to_int(), apply_damage, _impact_point, force)
 
 func apply_damage(_impact_point: Vector3, force: Vector3):
 	force.y = abs(force.y)

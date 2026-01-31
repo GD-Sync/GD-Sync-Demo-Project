@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://b2ew46dlu7u7x"]
 
-[ext_resource type="Script" path="res://Player/GrenadeLauncher.gd" id="1_n50mh"]
+[ext_resource type="Script" uid="uid://3ffaw7tqu1s5" path="res://Player/GrenadeLauncher.gd" id="1_n50mh"]
 [ext_resource type="Material" uid="uid://dus6jtbfyqwj8" path="res://Player/GrenadeVisuals/aim_material.tres" id="2_qr0pg"]
 [ext_resource type="Material" uid="uid://b6h7p7jogt6ep" path="res://Player/GrenadeVisuals/trajectory_material.tres" id="3_s7dm5"]
-[ext_resource type="Script" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="4_j6gft"]
+[ext_resource type="Script" uid="uid://bpkgvmd756kxo" path="res://addons/GD-Sync/Scripts/Types/NodeInstantiator.gd" id="4_j6gft"]
 [ext_resource type="PackedScene" uid="uid://bq562nfq7puh" path="res://Player/Grenade.tscn" id="5_wnc0k"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_we0uy"]

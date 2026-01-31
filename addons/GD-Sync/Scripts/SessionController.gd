@@ -1,6 +1,6 @@
 extends Node
 
-#Copyright (c) 2025 GD-Sync.
+#Copyright (c) 2026 GD-Sync.
 #All rights reserved.
 #
 #Redistribution and use in source form, with or without modification,
@@ -27,6 +27,8 @@ extends Node
 signal scene_ready
 
 var request_processor
+var connection_controller
+var logger
 var GDSync
 
 var current_client_id : int = -1
@@ -59,10 +61,14 @@ var events : Array[Dictionary] = []
 var active_scene_change : String = ""
 var scene_ready_list : Array[int] = []
 
+var ping_sessions : Dictionary = {}
+
 func _ready() -> void:
 	name = "SessionController"
 	GDSync = get_node("/root/GDSync")
 	request_processor = GDSync._request_processor
+	connection_controller = GDSync._connection_controller
+	logger = GDSync._logger
 	
 	GDSync.expose_func(sync_timer)
 	GDSync.expose_func(get_timer_latency)
@@ -72,6 +78,9 @@ func _ready() -> void:
 	GDSync.expose_func(mark_scene_ready)
 	GDSync.expose_func(switch_scene_success)
 	GDSync.expose_func(switch_scene_failed)
+	GDSync.expose_func(ping_send)
+	GDSync.expose_func(ping_return)
+	GDSync.expose_func(emit_signal_remote)
 	
 	GDSync.client_joined.connect(client_joined)
 	GDSync.client_left.connect(client_left)
@@ -97,8 +106,8 @@ func handle_events(delta : float) -> void:
 	
 	synced_time_cooldown -= delta
 	if synced_time_cooldown <= 0.0:
-		synced_time_cooldown = 5.0
-		GDSync.call_func(sync_timer, [synced_time])
+		synced_time_cooldown = 30.0
+		GDSync.call_func(sync_timer, synced_time)
 
 func sync_timer(time : float) -> void:
 	remote_time = time
@@ -109,10 +118,10 @@ func sync_timer(time : float) -> void:
 	
 	for i in range(5):
 		await get_tree().process_frame
-		GDSync.call_func_on(GDSync.get_host(), get_timer_latency, [GDSync.get_client_id(), Time.get_unix_time_from_system()])
+		GDSync.call_func_on(GDSync.get_host(), get_timer_latency, GDSync.get_client_id(), Time.get_unix_time_from_system())
 
 func get_timer_latency(client : int, timestamp : float) -> void:
-	GDSync.call_func_on(client, timer_latency_callback, [timestamp])
+	GDSync.call_func_on(client, timer_latency_callback, timestamp)
 
 func timer_latency_callback(timestamp : float) -> void:
 	remote_time_counter += 1
@@ -129,7 +138,7 @@ func register_event(event_name : String, time : float, parameters : Array, local
 	})
 	
 	if local:
-		GDSync.call_func(register_event, [event_name, time, parameters])
+		GDSync.call_func(register_event, event_name, time, parameters)
 
 func client_id_changed(client_id : int) -> void:
 	var own_data = null
@@ -158,6 +167,9 @@ func set_lobby_data(name : String, password : String) -> void:
 	synced_time = 0.0
 	lobby_name = name
 	lobby_password = password
+	
+	logger.register_profiler_data("lobby_name", lobby_name)
+	logger.register_profiler_data("lobby_password", password)
 
 func lobby_created() -> void:
 	own_lobby = true
@@ -191,14 +203,14 @@ func client_joined(client_id : int) -> void:
 		synced_time_cooldown = 0.0
 		
 		for event in events:
-			GDSync.call_func_on(client_id, register_event, [
+			GDSync.call_func_on(client_id, register_event,
 				event["Name"],
 				event["Time"],
 				event["Parameters"]
-			])
+			)
 		
 		if active_scene_change != "":
-			GDSync.call_func(load_scene, [active_scene_change])
+			GDSync.call_func(load_scene, active_scene_change)
 
 func client_left(id : int) -> void:
 	if player_data.has(id): player_data.erase(id)
@@ -246,9 +258,14 @@ func cache_nodepath(node_path : String, index : int) -> void:
 	
 	var node : Node = get_node_or_null(node_path)
 	if node:
+		var tree : SceneTree = get_tree()
 		await node.tree_exiting
-		await get_tree().process_frame
-		await get_tree().process_frame
+		
+		if !is_instance_valid(tree) or !is_instance_valid(node):
+			return
+		
+		await tree.process_frame
+		await tree.process_frame
 		request_processor.create_erase_nodepath_cache_request(index)
 
 func erase_nodepath_cache(index : int) -> void:
@@ -271,28 +288,26 @@ func erase_name_cache(index : int) -> void:
 		name_cache.erase(name)
 		name_index_cache.erase(index)
 
-func create_resource_reference(resource : Resource, id : String) -> void:
+func create_resource_reference(resource : RefCounted, id : String) -> void:
 	reference_resource_cache[id] = resource
 	resource_reference_cache[resource] = id
 
-func erase_resource_reference(resource : Resource) -> void:
+func erase_resource_reference(resource : RefCounted) -> void:
 	if resource_reference_cache.has(resource):
 		var id : String = resource_reference_cache[resource]
 		resource_reference_cache.erase(resource)
 		reference_resource_cache.erase(id)
 
-func has_resource_reference(resource : Resource) -> bool:
-	print(resource_reference_cache)
-	print(reference_resource_cache)
+func has_resource_reference(resource : RefCounted) -> bool:
 	return resource_reference_cache.has(resource)
 
-func get_resource_reference(resource : Resource) -> String:
+func get_resource_reference(resource : RefCounted) -> String:
 	return resource_reference_cache[resource]
 
 func has_resource_by_reference(id : String) -> bool:
 	return reference_resource_cache.has(id)
 
-func get_resource_by_reference(id : String) -> Resource:
+func get_resource_by_reference(id : String) -> RefCounted:
 	return reference_resource_cache[id]
 
 func set_player_data(key : String, value) -> void:
@@ -306,6 +321,8 @@ func player_data_changed(client_id : int, key : String) -> void:
 		GDSync.player_data_changed.emit(client_id, key, data[key])
 	else:
 		GDSync.player_data_changed.emit(client_id, key, null)
+	
+	logger.register_profiler_data("player_data", player_data)
 
 func erase_player_data(key : String) -> void:
 	if player_data[GDSync.get_client_id()].has(key):
@@ -338,10 +355,15 @@ func override_player_data(data : Dictionary) -> void:
 
 func override_lobby_data(data : Dictionary) -> void:
 	lobby_data = data
+	logger.register_profiler_data("lobby_data", lobby_data)
 
-func get_player_limit() -> int:
+func get_lobby_player_limit() -> int:
 	if !lobby_data.has("PlayerLimit"): return 0
 	return lobby_data["PlayerLimit"]
+
+func get_lobby_visibility() -> bool:
+	if !lobby_data.has("Public"): return false
+	return lobby_data["Public"]
 
 func lobby_has_password() -> bool:
 	if lobby_data.has("HasPassword"):
@@ -417,8 +439,11 @@ func expose_func(function : Callable) -> void:
 	var exposedArray : Array = object.get_meta("ExposedFunctions", [])
 	exposedArray.append(functionName)
 	object.set_meta("ExposedFunctions", exposedArray)
+	
+	if object is GDScript:
+		create_resource_reference(object, object.resource_path)
 
-func hide_function(function : Callable) -> void:
+func hide_func(function : Callable) -> void:
 	var object : Object = function.get_object()
 	var functionName : String = function.get_method()
 	var exposedArray : Array = object.get_meta("ExposedFunctions", [])
@@ -427,6 +452,21 @@ func hide_function(function : Callable) -> void:
 func function_is_exposed(object : Object, function_name : String) -> bool:
 	var exposedArray : Array = object.get_meta("ExposedFunctions", [])
 	return exposedArray.has(function_name)
+
+func expose_signal(target_signal : Signal) -> void:
+	var object : Object = target_signal.get_object()
+	var exposedArray : Array = object.get_meta("ExposedSignals", [])
+	exposedArray.append(target_signal.get_name())
+	object.set_meta("ExposedSignals", exposedArray)
+
+func signal_is_exposed(object : Object, signal_name : StringName) -> bool:
+	var exposedArray : Array = object.get_meta("ExposedSignals", [])
+	return exposedArray.has(signal_name)
+
+func hide_signal(target_signal : Signal) -> void:
+	var exposedArray : Array = target_signal.get_object().get_meta("ExposedSignals", [])
+	var signal_name : StringName = target_signal.get_name()
+	if exposedArray.has(signal_name): exposedArray.erase(signal_name)
 
 func expose_property(object : Object, property_name : String) -> void:
 	var exposedArray : Array = object.get_meta("ExposedProperties", [])
@@ -442,17 +482,20 @@ func property_is_exposed(object : Object, propertyName : String) -> bool:
 	return exposedArray.has(propertyName)
 
 func set_gdsync_owner(node : Node, owner) -> void:
-	set_mc_owner_remote(node, owner)
+	set_gdsync_owner_remote(node, owner)
 	request_processor.set_gdsync_owner(node, owner)
 
-func set_mc_owner_remote(node : Node, owner) -> void:
+func set_gdsync_owner_remote(node : Node, owner) -> void:
 	var path_string : String = str(node.get_path())
 	if owner_cache.has(path_string): owner_cache.erase(path_string)
 	
-	node.set_meta("mcOwner", owner)
-	emit_mc_owner_changed(node, owner)
+	var previous_owner = node.get_meta("gdsyncOwner", -1)
+	node.set_meta("gdsyncOwner", owner)
+	
+	if previous_owner != owner:
+		emit_gdsync_owner_changed(node, owner)
 
-func set_mc_owner_delayed(node_path : String, owner) -> void:
+func set_gdsync_owner_delayed(node_path : String, owner) -> void:
 	owner_cache[node_path] = owner
 	
 	await get_tree().process_frame
@@ -465,23 +508,24 @@ func set_from_owner_cache(node_path : String) -> void:
 	var node : Node = get_node_or_null(node_path)
 	owner_cache.erase(node_path)
 	if node == null: return
-	set_mc_owner_remote(node, owner)
+	set_gdsync_owner_remote(node, owner)
 
-func emit_mc_owner_changed(node : Node, owner) -> void:
-	if node.has_user_signal("mc_owner_changed"): node.emit_signal("mc_owner_changed", owner)
+func emit_gdsync_owner_changed(node : Node, owner) -> void:
+	if node.has_user_signal("gdsync_owner_changed"): node.emit_signal("gdsync_owner_changed", owner)
 	for child in node.get_children():
-		emit_mc_owner_changed(child, owner)
+		emit_gdsync_owner_changed(child, owner)
 
 func get_gdsync_owner(node : Node) -> int:
-	var path_string : String = str(node.get_path())
-	if owner_cache.has(path_string):
-		set_mc_owner_remote(node, owner_cache[path_string])
+	if node.is_inside_tree():
+		var path_string : String = str(node.get_path())
+		if owner_cache.has(path_string):
+			set_gdsync_owner_remote(node, owner_cache[path_string])
 	
 	var ownerID : int = -1
 	var p : Node = node
 	while p != null and ownerID < 0:
-		if p.has_meta("mcOwner"):
-			var id = p.get_meta("mcOwner", null)
+		if p.has_meta("gdsyncOwner"):
+			var id = p.get_meta("gdsyncOwner", null)
 			if id != null: ownerID = id
 		p = p.get_parent()
 	return ownerID
@@ -490,15 +534,15 @@ func is_gdsync_owner(node : Node) -> bool:
 	return get_gdsync_owner(node) == GDSync.get_client_id()
 
 func connect_gdsync_owner_changed(node : Node, callable : Callable) -> void:
-	if !node.has_user_signal("mc_owner_changed"):
-		node.add_user_signal("mc_owner_changed", ["owner"])
-	node.connect("mc_owner_changed", callable)
+	if !node.has_user_signal("gdsync_owner_changed"):
+		node.add_user_signal("gdsync_owner_changed", ["owner"])
+	node.connect("gdsync_owner_changed", callable)
 
 func disconnect_gdsync_owner_changed(node : Node, callable : Callable) -> void:
-	node.disconnect("mc_owner_changed", callable)
+	node.disconnect("gdsync_owner_changed", callable)
 
 func change_scene(scene_path : String) -> void:
-	GDSync.call_func(load_scene, [scene_path])
+	GDSync.call_func(load_scene, scene_path)
 	load_scene(scene_path)
 
 func load_scene(scene_path : String) -> void:
@@ -521,7 +565,7 @@ func load_scene(scene_path : String) -> void:
 		return
 	
 	var own_id : int = GDSync.get_client_id()
-	GDSync.call_func(mark_scene_ready, [own_id])
+	GDSync.call_func(mark_scene_ready, own_id)
 	mark_scene_ready(own_id)
 	
 	await scene_ready
@@ -589,3 +633,87 @@ func instantiate_threaded(tree : SceneTree, packed_scene : PackedScene) -> Node:
 		await tree.create_timer(0.02).timeout
 	
 	return thread.wait_to_finish()
+
+func emit_signal_on_clients(clients : Array, target_signal : Signal, params : Array) -> void:
+	var id : String
+	var object : Object = target_signal.get_object()
+	var signal_name : StringName = target_signal.get_name()
+	
+	if object is Node:
+		id = String(object.get_path())
+		
+		for i in range(10):
+			if object.has_meta("PauseSync"):
+				await get_tree().process_frame
+	elif object is RefCounted:
+		if !has_resource_reference(object):
+			logger.write_error("Creating emit signal request failed, the Resource was not registered. <"+str(object)+"><"+signal_name+">")
+			push_error("Resource must be registered using GDSync.register_resource()")
+			return
+	
+	for client in clients:
+		if client == GDSync.get_client_id():
+			emit_signal_remote(id, signal_name, params)
+		else:
+			GDSync.call_func_on(client, emit_signal_remote, id, signal_name, params)
+
+func emit_signal_remote(id : String, signal_name : String, params : Array) -> void:
+	var object : Object
+	if has_resource_by_reference(id):
+		object = get_resource_by_reference(id)
+	else:
+		object = get_node_or_null(id)
+	
+	if object == null:
+		logger.write_error("Emit signal failed since the Node or Resource was not found. <"+String(id)+"><"+signal_name+">")
+		push_error("Attempted to call nonexistent function \""+signal_name+"\" on "+String(id))
+		return
+	
+	if connection_controller.PROTECTED:
+		if !object_is_exposed(object) and !signal_is_exposed(object, signal_name):
+			logger.write_error("Emit signal failed since the object or signal was not exposed. <"+id+"><"+signal_name+">")
+			push_error("Attempted to emit a protected signal \""+signal_name+"\" on "+id+", please expose it using GDSync.expose_signal() or GDSync.expose_node()/GDSync.expose_resource().")
+			return
+	
+	if !object.has_signal(signal_name):
+		logger.write_error("Emit signal failed since the Node or Resource does not contain the specified signal. <"+String(id)+"><"+signal_name+">")
+		push_error("Attempted to emit nonexistent signal \""+signal_name+"\" on "+String(id))
+		return
+	
+	var signal_data : Array = [signal_name]
+	signal_data.append_array(params)
+	object.callv("emit_signal", signal_data)
+
+func get_ping(client_id : int, remove_frame_latency : bool) -> float:
+	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.randomize()
+	var session_id : int = rng.randi()
+	
+	var session_data : Dictionary = {"ping" : 0.0, "count" : 0}
+	ping_sessions[session_id] = session_data
+	
+	for i in range(5):
+		var time : float = Time.get_ticks_msec()/1000.0
+		GDSync.call_func_on(client_id, ping_send, GDSync.get_client_id(), session_id, time+(1.0/Engine.get_frames_per_second()) if remove_frame_latency else time, remove_frame_latency)
+		await get_tree().create_timer(0.02).timeout
+	
+	for i in range(5):
+		await get_tree().create_timer(0.1).timeout
+		if session_data["count"] == 5: break
+	
+	ping_sessions.erase(session_id)
+	
+	if session_data["count"] == 0:
+		return -1
+	else:
+		return session_data["ping"]/float(session_data["count"])
+
+func ping_send(origin_client : int, session_id : int, time : float, remove_frame_latency : bool) -> void:
+	GDSync.call_func_on(origin_client, ping_return, session_id, time+(1.0/Engine.get_frames_per_second()) if remove_frame_latency else time, remove_frame_latency)
+
+func ping_return(session_id : int, time : float, remove_frame_latency : bool) -> void:
+	if !ping_sessions.has(session_id): return
+	var ping : float = Time.get_ticks_msec()/1000.0 - (time+(1.0/Engine.get_frames_per_second())) if remove_frame_latency else Time.get_ticks_msec()/1000.0 - time
+	var session_data : Dictionary = ping_sessions[session_id]
+	session_data["count"] = session_data["count"] + 1
+	session_data["ping"] = session_data["ping"] + ping
